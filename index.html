@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head><title>Temperatur</title></head>
+<body>
+  <h1 id="temp">Loading...</h1>
+  <script>
+    fetch("data.json")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("temp").innerText = `Temperatur: ${data.temperature}°C`;
+      });
+  </script>
+</body>
+</html>
