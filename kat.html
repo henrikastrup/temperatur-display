@@ -24,13 +24,11 @@
         .status-core.inside { background: linear-gradient(135deg, #2ecc71, #27ae60); }
         .status-text { font-size: 2.5em; font-weight: 700; margin: 20px 0; background: linear-gradient(45deg, #333, #666); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .status-icon { font-size: 1.5em; margin-left: 10px; }
-        .last-change { font-size: 1em; color: #666; background: rgba(0,0,0,0.05); padding: 10px 20px; border-radius: 25px; border: 1px solid rgba(0,0,0,0.1); }
+        .last-change { font-size: 1em; color: #3b5b3d; background: rgba(46, 204, 113, 0.15); padding: 10px 20px; border-radius: 25px; border: 1px solid rgba(46, 204, 113, 0.2); }
         .chart-section { display: flex; flex-direction: column; align-items: center; }
         .chart-title { font-size: 1.6em; font-weight: 600; color: #333; margin-bottom: 30px; text-align: center; }
         .chart-container { position: relative; width: 280px; height: 280px; background: rgba(255, 255, 255, 0.8); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .footer { text-align: center; margin-top: 40px; font-size: 1em; color: #666; padding: 20px; background: rgba(0,0,0,0.02); border-radius: 15px; border: 1px solid rgba(0,0,0,0.05); }
-        .footer a { color: #667eea; text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
-        .footer a:hover { color: #764ba2; }
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; width:100%; max-width: 300px; }
         .stat-card { background: rgba(255, 255, 255, 0.6); padding: 15px; border-radius: 15px; text-align: center; border: 1px solid rgba(0,0,0,0.05); }
         .stat-value { font-size: 1.4em; font-weight: 700; color: #333; }
@@ -58,16 +56,16 @@
                 </div>
                 
                 <div class="last-change">
-                    Status ændret: 28.07.2025, 19.58
+                    Status ændret: 28.07.2025, 20.03
                 </div>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-value">2t 19m</div>
+                        <div class="stat-value">2t 14m</div>
                         <div class="stat-label">Hjemme i dag</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value">21t 41m</div>
+                        <div class="stat-value">21t 46m</div>
                         <div class="stat-label">Ude i dag</div>
                     </div>
                 </div>
@@ -82,8 +80,7 @@
         </div>
 
         <div class="footer">
-            Sidst opdateret: 28.07.2025, 19.58 | 
-            <a href="index.html">Gå til Hoved-Dashboard</a>
+            Sidst opdateret: 28.07.2025, 20.03
         </div>
     </div>
 
@@ -101,7 +98,7 @@
             data: {
                 labels: ['Tid Hjemme', 'Tid Ude'],
                 datasets: [{
-                    data: [2.31951212969091, 21.6804878703091],
+                    data: [2.23617879635758, 21.7638212036424],
                     backgroundColor: ['#2ecc71', '#e74c3c'],
                     borderColor: ['#ffffff'],
                     borderWidth: 4,
