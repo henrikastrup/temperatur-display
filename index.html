@@ -86,6 +86,9 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2);
+            /* --- RETTELSE TILFØJET HER --- */
+            position: relative;
+            height: 40vh; /* Sætter højden til 40% af skærmens højde */
         }
         
         .chart-title {
@@ -131,6 +134,9 @@
             .temp-value {
                 font-size: 3rem;
             }
+            .chart-container {
+                height: 50vh; /* Lidt højere på mobil */
+            }
         }
     </style>
 </head>
@@ -153,17 +159,17 @@
             
             <div class="card">
                 <div class="stat-label">Minimum (24t)</div>
-                <div class="stat-value">21.5°C</div>
+                <div class="stat-value">26.1°C</div>
             </div>
             
             <div class="card">
                 <div class="stat-label">Maksimum (24t)</div>
-                <div class="stat-value">27.6°C</div>
+                <div class="stat-value">26.1°C</div>
             </div>
             
             <div class="card">
                 <div class="stat-label">Gennemsnit (24t)</div>
-                <div class="stat-value">25.8°C</div>
+                <div class="stat-value">26.1°C</div>
             </div>
         </div>
         
@@ -173,9 +179,9 @@
         </div>
         
         <div class="last-updated">
-            Sidst opdateret: 28.7.2025, 06.51.52
+            Sidst opdateret: 28.7.2025, 06.59.56
             <br>
-            Total målinger: 8
+            Total målinger: 1
         </div>
     </div>
     
@@ -185,10 +191,10 @@
         const chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ["06.35","06.40","06.48","06.48","06.48","06.49","06.51","06.51"],
+                labels: ["06.59"],
                 datasets: [{
                     label: 'Temperatur (°C)',
-                    data: [21.5,25.2,26,26.4,27,27.6,26.3,26.1],
+                    data: [26.1],
                     borderColor: '#667eea',
                     backgroundColor: 'rgba(102, 126, 234, 0.1)',
                     borderWidth: 3,
@@ -236,10 +242,8 @@
             }
         });
         
-        // Auto-refresh hver 5 minutter
-        setTimeout(() => {
-            location.reload();
-        }, 300000);
+        // --- RETTELSE: Auto-refresh er fjernet herfra ---
+
     </script>
 </body>
 </html>
