@@ -1,28 +1,41 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hvor er Bolle?</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #5D5C61 0%, #373737 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .container { max-width: 800px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; background: rgba(255, 255, 255, 0.98); border-radius: 20px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); backdrop-filter: blur(10px); }
-        .header { grid-column: 1 / -1; text-align: center; color: #333; margin-bottom: 10px; }
-        .header h1 { font-size: 2.8em; font-weight: 700; }
-        .status-card { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
-        .cat-image { width: 150px; height: 150px; object-fit: contain; }
-        .status-text { font-size: 3em; font-weight: 700; margin-top: 20px; color: #e74c3c; }
-        .status-icon { font-size: 1.5em; }
-        .last-change { font-size: 0.9em; color: #666; margin-top: 10px; }
-        .chart-card { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .chart-title { font-size: 1.4em; font-weight: 600; color: #333; margin-bottom: 20px; }
-        .chart-container { position: relative; width: 250px; height: 250px; }
-        .footer { grid-column: 1 / -1; text-align: center; margin-top: 20px; font-size: 0.9em; color: #555; }
-        .footer a { color: #5D5C61; text-decoration: none; font-weight: 600; }
-        @media (max-width: 768px) { .container { grid-template-columns: 1fr; padding: 20px; } .header h1 { font-size: 2.2em; } .status-text { font-size: 2.5em; } }
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; overflow-x: hidden; }
+        .container { max-width: 900px; width: 100%; background: rgba(255, 255, 255, 0.95); border-radius: 25px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .header { text-align: center; color: #333; margin-bottom: 40px; }
+        .header h1 { font-size: 3.2em; font-weight: 700; background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 10px; }
+        .main-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .status-section { display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; }
+        .status-indicator { position: relative; margin-bottom: 30px; }
+        .pulse-ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; border-radius: 50%; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .pulse-ring.outside { background: rgba(231, 76, 60, 0.4); border: 3px solid #e74c3c; }
+        .pulse-ring.inside { background: rgba(46, 204, 113, 0.4); border: 3px solid #2ecc71; }
+        @keyframes pulse { 0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 1; } 50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.3; } }
+        .status-core { position: relative; z-index: 2; width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2em; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .status-core.outside { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .status-core.inside { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .status-text { font-size: 2.5em; font-weight: 700; margin: 20px 0; background: linear-gradient(45deg, #333, #666); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .status-icon { font-size: 1.5em; margin-left: 10px; }
+        .last-change { font-size: 1em; color: #666; background: rgba(0,0,0,0.05); padding: 10px 20px; border-radius: 25px; border: 1px solid rgba(0,0,0,0.1); }
+        .chart-section { display: flex; flex-direction: column; align-items: center; }
+        .chart-title { font-size: 1.6em; font-weight: 600; color: #333; margin-bottom: 30px; text-align: center; }
+        .chart-container { position: relative; width: 280px; height: 280px; background: rgba(255, 255, 255, 0.8); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .footer { text-align: center; margin-top: 40px; font-size: 1em; color: #666; padding: 20px; background: rgba(0,0,0,0.02); border-radius: 15px; border: 1px solid rgba(0,0,0,0.05); }
+        .footer a { color: #667eea; text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
+        .footer a:hover { color: #764ba2; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; width:100%; max-width: 300px; }
+        .stat-card { background: rgba(255, 255, 255, 0.6); padding: 15px; border-radius: 15px; text-align: center; border: 1px solid rgba(0,0,0,0.05); }
+        .stat-value { font-size: 1.4em; font-weight: 700; color: #333; }
+        .stat-label { font-size: 0.9em; color: #666; margin-top: 5px; }
+        @media (max-width: 768px) { .container { padding: 30px 20px; } .header h1 { font-size: 2.5em; } .main-content { grid-template-columns: 1fr; gap: 30px; } .status-text { font-size: 2em; } .pulse-ring { width: 160px; height: 160px; } .status-core { width: 100px; height: 100px; } .chart-container { width: 250px; height: 250px; } }
     </style>
 </head>
 <body>
@@ -31,21 +44,46 @@
             <h1>Hvor er Bolle? 🐾</h1>
         </div>
 
-        <div class="status-card">
-            <img src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/78028/cat-clipart-md.png" alt="Silhuet af en sort kat" class="cat-image">
-            <div class="status-text">Ude <span class="status-icon">🌳</span></div>
-            <div class="last-change">Status ændret: 28.07.2025, 19.50</div>
-        </div>
+        <div class="main-content">
+            <div class="status-section">
+                <div class="status-indicator">
+                    <div class="pulse-ring outside"></div>
+                    <div class="status-core outside">
+                        UDE
+                    </div>
+                </div>
+                
+                <div class="status-text">
+                    Ude <span class="status-icon">🌳</span>
+                </div>
+                
+                <div class="last-change">
+                    Status ændret: 28.07.2025, 19.58
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">2t 19m</div>
+                        <div class="stat-label">Hjemme i dag</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">21t 41m</div>
+                        <div class="stat-label">Ude i dag</div>
+                    </div>
+                </div>
+            </div>
 
-        <div class="chart-card">
-            <div class="chart-title">Fordeling af tid (sidste 24t)</div>
-            <div class="chart-container">
-                <canvas id="timeChart"></canvas>
+            <div class="chart-section">
+                <div class="chart-title">Fordeling af tid (sidste 24t)</div>
+                <div class="chart-container">
+                    <canvas id="timeChart"></canvas>
+                </div>
             </div>
         </div>
 
         <div class="footer">
-            Sidst opdateret: 28.07.2025, 19.50 | <a href="index.html">Gå til Hoved-Dashboard</a>
+            Sidst opdateret: 28.07.2025, 19.58 | 
+            <a href="index.html">Gå til Hoved-Dashboard</a>
         </div>
     </div>
 
@@ -63,22 +101,26 @@
             data: {
                 labels: ['Tid Hjemme', 'Tid Ude'],
                 datasets: [{
-                    data: [2.45284546302425, 21.5471545369758],
+                    data: [2.31951212969091, 21.6804878703091],
                     backgroundColor: ['#2ecc71', '#e74c3c'],
                     borderColor: ['#ffffff'],
-                    borderWidth: 5,
-                    hoverOffset: 4
+                    borderWidth: 4,
+                    hoverOffset: 8
                 }]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
-                cutout: '65%',
+                maintainAspectRatio: true,
+                cutout: '70%',
                 plugins: {
                     legend: {
                         position: 'bottom',
                         labels: {
-                           font: { size: 14 },
+                           font: { 
+                               size: 13,
+                               family: 'Poppins'
+                           },
+                           padding: 20,
                            generateLabels: function(chart) {
                                 const data = chart.data;
                                 if (data.labels.length && data.datasets.length) {
@@ -101,6 +143,10 @@
                            }
                         }
                     }
+                },
+                animation: {
+                    animateRotate: true,
+                    duration: 1500
                 }
             }
         });
