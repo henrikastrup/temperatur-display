@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hvor er Bølle?</title>
+    <title>Hvor er Bolle?</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
@@ -12,7 +12,7 @@
         .container { max-width: 900px; width: 100%; background: rgba(255, 255, 255, 0.95); border-radius: 25px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); }
         .header { text-align: center; color: #333; margin-bottom: 40px; }
         .header h1 { font-size: 3.2em; font-weight: 700; background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 10px; }
-        .main-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .main-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; margin-bottom: 40px; }
         .status-section { display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; }
         .status-indicator { position: relative; margin-bottom: 30px; }
         .pulse-ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; border-radius: 50%; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
@@ -28,44 +28,37 @@
         .chart-section { display: flex; flex-direction: column; align-items: center; }
         .chart-title { font-size: 1.6em; font-weight: 600; color: #333; margin-bottom: 30px; text-align: center; }
         .chart-container { position: relative; width: 280px; height: 280px; background: rgba(255, 255, 255, 0.8); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .footer { text-align: center; margin-top: 40px; font-size: 1em; color: #666; padding: 20px; background: rgba(0,0,0,0.02); border-radius: 15px; border: 1px solid rgba(0,0,0,0.05); }
+        .footer { text-align: center; font-size: 1em; color: #666; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
+        .activity-section { margin-bottom: 40px; }
+        .activity-chart-container { background: rgba(255, 255, 255, 0.8); border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid rgba(255, 255, 255, 0.2); height: 350px; }
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; width:100%; max-width: 300px; }
         .stat-card { background: rgba(255, 255, 255, 0.6); padding: 15px; border-radius: 15px; text-align: center; border: 1px solid rgba(0,0,0,0.05); }
         .stat-value { font-size: 1.4em; font-weight: 700; color: #333; }
         .stat-label { font-size: 0.9em; color: #666; margin-top: 5px; }
-        @media (max-width: 768px) { .container { padding: 30px 20px; } .header h1 { font-size: 2.5em; } .main-content { grid-template-columns: 1fr; gap: 30px; } .status-text { font-size: 2em; } .pulse-ring { width: 160px; height: 160px; } .status-core { width: 100px; height: 100px; } .chart-container { width: 250px; height: 250px; } }
+        @media (max-width: 768px) { .container { padding: 30px 20px; } .header h1 { font-size: 2.5em; } .main-content { grid-template-columns: 1fr; gap: 30px; } .activity-chart-container { height: 300px; padding: 20px; } .status-text { font-size: 2em; } .pulse-ring { width: 160px; height: 160px; } .status-core { width: 100px; height: 100px; } .chart-container { width: 250px; height: 250px; } }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Hvor er Bølle? 🐾</h1>
+            <h1>Hvor er Bolle? 🐾</h1>
         </div>
 
         <div class="main-content">
             <div class="status-section">
                 <div class="status-indicator">
                     <div class="pulse-ring outside"></div>
-                    <div class="status-core outside">
-                        UDE
-                    </div>
+                    <div class="status-core outside">UDE</div>
                 </div>
-                
-                <div class="status-text">
-                    Ude <span class="status-icon">🌳</span>
-                </div>
-                
-                <div class="last-change">
-                    Status ændret: 28.07.2025, 20.12
-                </div>
-                
+                <div class="status-text">Ude <span class="status-icon">🌳</span></div>
+                <div class="last-change">Status ændret: 28.07.2025, 20.21</div>
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-value">2t 5m</div>
+                        <div class="stat-value">1t 56m</div>
                         <div class="stat-label">Hjemme i dag</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value">21t 55m</div>
+                        <div class="stat-value">22t 4m</div>
                         <div class="stat-label">Ude i dag</div>
                     </div>
                 </div>
@@ -79,8 +72,15 @@
             </div>
         </div>
 
+        <div class="activity-section">
+            <div class="chart-title">📊 Aktivitet (sidste 24 timer)</div>
+            <div class="activity-chart-container">
+                <canvas id="activityChart"></canvas>
+            </div>
+        </div>
+
         <div class="footer">
-            Sidst opdateret: 28.07.2025, 20.12
+            Sidst opdateret: 28.07.2025, 20.21
         </div>
     </div>
 
@@ -97,55 +97,34 @@
             type: 'doughnut',
             data: {
                 labels: ['Tid Hjemme', 'Tid Ude'],
+                datasets: [{ data: [1.93617879635758, 22.0638212036424], backgroundColor: ['#2ecc71', '#e74c3c'], borderColor: ['#ffffff'], borderWidth: 4, hoverOffset: 8 }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: true, cutout: '70%', plugins: { legend: { position: 'bottom', labels: { font: { size: 13, family: 'Poppins' }, padding: 20, generateLabels: function(chart) { const data = chart.data; if (data.labels.length && data.datasets.length) { return data.labels.map((label, i) => { const meta = chart.getDatasetMeta(0); const style = meta.controller.getStyle(i); const value = data.datasets[0].data[i]; const formattedTime = formatHours(value); return { text: label + ': ' + formattedTime, fillStyle: style.backgroundColor, strokeStyle: style.borderColor, lineWidth: style.borderWidth, hidden: isNaN(data.datasets[0].data[i]) || meta.data[i].hidden, index: i }; }); } return []; } } } }, animation: { animateRotate: true, duration: 1500 } }
+        });
+
+        const activityCtx = document.getElementById('activityChart').getContext('2d');
+        new Chart(activityCtx, {
+            type: 'line',
+            data: {
+                labels: ["20.21"],
                 datasets: [{
-                    data: [2.08617879635758, 21.9138212036424],
-                    backgroundColor: ['#2ecc71', '#e74c3c'],
-                    borderColor: ['#ffffff'],
-                    borderWidth: 4,
-                    hoverOffset: 8
+                    label: 'Status',
+                    data: [1],
+                    borderColor: '#667eea',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 0,
+                    pointHoverRadius: 0,
+                    segment: {
+                        borderColor: ctx => (ctx.p1.parsed.y === 1 ? '#e74c3c' : '#2ecc71'),
+                        backgroundColor: ctx => (ctx.p1.parsed.y === 1 ? 'rgba(231, 76, 60, 0.2)' : 'rgba(46, 204, 113, 0.2)')
+                    }
                 }]
             },
             options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                cutout: '70%',
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                           font: { 
-                               size: 13,
-                               family: 'Poppins'
-                           },
-                           padding: 20,
-                           generateLabels: function(chart) {
-                                const data = chart.data;
-                                if (data.labels.length && data.datasets.length) {
-                                    return data.labels.map((label, i) => {
-                                        const meta = chart.getDatasetMeta(0);
-                                        const style = meta.controller.getStyle(i);
-                                        const value = data.datasets[0].data[i];
-                                        const formattedTime = formatHours(value);
-                                        return {
-                                            text: label + ': ' + formattedTime,
-                                            fillStyle: style.backgroundColor,
-                                            strokeStyle: style.borderColor,
-                                            lineWidth: style.borderWidth,
-                                            hidden: isNaN(data.datasets[0].data[i]) || meta.data[i].hidden,
-                                            index: i
-                                        };
-                                    });
-                                }
-                                return [];
-                           }
-                        }
-                    }
-                },
-                animation: {
-                    animateRotate: true,
-                    duration: 1500
-                }
-            }
+                responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(context) { return context.parsed.y === 1 ? 'Ude 🌳' : 'Hjemme 🏠'; } } } }, scales: { y: { beginAtZero: true, max: 1, ticks: { stepSize: 1, callback: function(value) { return value === 1 ? 'Ude' : 'Hjemme'; }, font: { family: 'Poppins', size: 12 } }, grid: { color: 'rgba(0,0,0,0.05)', drawBorder: false } }, x: { grid: { display: false }, ticks: { font: { family: 'Poppins', size: 11 }, maxTicksLimit: 12 } } }, interaction: { intersect: false, mode: 'index' } }
         });
     </script>
 </body>
