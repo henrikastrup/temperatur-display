@@ -13,7 +13,7 @@
         .header { grid-column: 1 / -1; text-align: center; color: #333; margin-bottom: 10px; }
         .header h1 { font-size: 2.8em; font-weight: 700; }
         .status-card { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
-        .cat-image { width: 150px; height: auto; object-fit: contain; }
+        .cat-image { width: 150px; height: 150px; object-fit: contain; }
         .status-text { font-size: 3em; font-weight: 700; margin-top: 20px; color: #e74c3c; }
         .status-icon { font-size: 1.5em; }
         .last-change { font-size: 0.9em; color: #666; margin-top: 10px; }
@@ -34,7 +34,7 @@
         <div class="status-card">
             <img src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/78028/cat-clipart-md.png" alt="Silhuet af en sort kat" class="cat-image">
             <div class="status-text">Ude <span class="status-icon">🌳</span></div>
-            <div class="last-change">Status ændret: 28.07.2025, 18.48</div>
+            <div class="last-change">Status ændret: 28.07.2025, 18.55</div>
         </div>
 
         <div class="chart-card">
@@ -45,7 +45,7 @@
         </div>
 
         <div class="footer">
-            Sidst opdateret: 28.07.2025, 18.48 | <a href="index.html">Gå til Hoved-Dashboard</a>
+            Sidst opdateret: 28.07.2025, 18.55 | <a href="index.html">Gå til Hoved-Dashboard</a>
         </div>
     </div>
 
@@ -63,7 +63,7 @@
             data: {
                 labels: ['Tid Hjemme', 'Tid Ude'],
                 datasets: [{
-                    data: [3.48617879635758, 20.5138212036424],
+                    data: [3.36951212969091, 20.6304878703091],
                     backgroundColor: ['#2ecc71', '#e74c3c'],
                     borderColor: ['#ffffff'],
                     borderWidth: 5,
@@ -79,7 +79,6 @@
                         position: 'bottom',
                         labels: {
                            font: { size: 14 },
-                           // Her tilføjer vi den formaterede tid til label-teksten!
                            generateLabels: function(chart) {
                                 const data = chart.data;
                                 if (data.labels.length && data.datasets.length) {
