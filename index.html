@@ -144,7 +144,7 @@
         <div class="dashboard">
             <div class="card current-temp">
                 <div class="stat-label">Aktuel Temperatur</div>
-                <div class="temp-value">26°C</div>
+                <div class="temp-value">26.4°C</div>
                 <div>
                     <span class="status-indicator status-hot"></span>
                     Varmt
@@ -158,12 +158,12 @@
             
             <div class="card">
                 <div class="stat-label">Maksimum (24t)</div>
-                <div class="stat-value">26°C</div>
+                <div class="stat-value">26.4°C</div>
             </div>
             
             <div class="card">
                 <div class="stat-label">Gennemsnit (24t)</div>
-                <div class="stat-value">24.2°C</div>
+                <div class="stat-value">24.8°C</div>
             </div>
         </div>
         
@@ -173,9 +173,9 @@
         </div>
         
         <div class="last-updated">
-            Sidst opdateret: 28.7.2025, 06.48.23
+            Sidst opdateret: 28.7.2025, 06.48.34
             <br>
-            Total målinger: 3
+            Total målinger: 4
         </div>
     </div>
     
@@ -185,10 +185,10 @@
         const chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ["06.35","06.40","06.48"],
+                labels: ["06.35","06.40","06.48","06.48"],
                 datasets: [{
                     label: 'Temperatur (°C)',
-                    data: [21.5,25.2,26],
+                    data: [21.5,25.2,26,26.4],
                     borderColor: '#667eea',
                     backgroundColor: 'rgba(102, 126, 234, 0.1)',
                     borderWidth: 3,
