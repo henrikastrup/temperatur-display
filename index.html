@@ -3,247 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Badeværelse Temperatur Dashboard</title>
+    <title>Smart Home Dashboard</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-        }
-        
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .dashboard {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .current-temp {
-            grid-column: 1 / -1;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-        }
-        
-        .temp-value {
-            font-size: 4rem;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        
-        .stat-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #333;
-            margin: 10px 0;
-        }
-        
-        .stat-label {
-            font-size: 1rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .chart-container {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            /* --- RETTELSE TILFØJET HER --- */
-            position: relative;
-            height: 40vh; /* Sætter højden til 40% af skærmens højde */
-        }
-        
-        .chart-title {
-            text-align: center;
-            font-size: 1.5rem;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        
-        .last-updated {
-            text-align: center;
-            color: white;
-            margin-top: 20px;
-            opacity: 0.8;
-        }
-        
-        .status-indicator {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            margin-right: 10px;
-            animation: pulse 2s infinite;
-        }
-        
-        .status-good { background-color: #2ecc71; }
-        .status-warm { background-color: #f39c12; }
-        .status-hot { background-color: #e74c3c; }
-        
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-        
-        @media (max-width: 768px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-            .current-temp {
-                grid-column: 1;
-            }
-            .temp-value {
-                font-size: 3rem;
-            }
-            .chart-container {
-                height: 50vh; /* Lidt højere på mobil */
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .last-updated { opacity: 0.9; font-size: 1.1em; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: rgba(255, 255, 255, 0.95); border-radius: 15px; padding: 25px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); transition: transform 0.3s ease; }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-header { display: flex; align-items: center; margin-bottom: 15px; }
+        .stat-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-size: 24px; }
+        .temp-icon { background: linear-gradient(45deg, #ff6b6b, #ffa500); color: white; }
+        .humidity-icon { background: linear-gradient(45deg, #4ecdc4, #44a08d); color: white; }
+        .door-icon { background: linear-gradient(45deg, #a8edea, #fed6e3); color: #333; }
+        .stat-title { font-size: 1.2em; font-weight: 600; }
+        .stat-value { font-size: 2.5em; font-weight: bold; color: #2c3e50; margin-bottom: 5px; }
+        .stat-unit { font-size: 0.9em; color: #7f8c8d; margin-left: 5px; }
+        .stat-change { font-size: 0.9em; padding: 4px 8px; border-radius: 12px; display: inline-block; background: #e2e3e5; color: #383d41; }
+        .charts-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+        .chart-card { background: rgba(255, 255, 255, 0.95); border-radius: 15px; padding: 25px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+        .chart-title { font-size: 1.3em; font-weight: 600; color: #2c3e50; margin-bottom: 20px; text-align: center; }
+        .chart-container { position: relative; height: 300px; }
+        .door-activity { grid-column: 1 / -1; }
+        .door-activity-content { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; align-items: flex-start; }
+        .recent-activity { background: #f8f9fa; border-radius: 10px; padding: 20px; }
+        .activity-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #e9ecef; }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-time { font-weight: 600; color: #495057; margin-right: 15px; min-width: 60px; }
+        .activity-text { color: #6c757d; }
+        @media (max-width: 992px) { .charts-section { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .door-activity-content { grid-template-columns: 1fr; } .header h1 { font-size: 2em; } }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🌡️ Badeværelse Temperatur</h1>
-            <p>Live temperatur monitoring</p>
+            <h1>🏠 Smart Home Dashboard</h1>
+            <div class="last-updated">Sidst opdateret: 28. juli 2025 kl. 09.17</div>
         </div>
-        
-        <div class="dashboard">
-            <div class="card current-temp">
-                <div class="stat-label">Aktuel Temperatur</div>
-                <div class="temp-value">22.6°C</div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon temp-icon">🌡️</div>
+                    <div class="stat-title">Temperatur</div>
+                </div>
+                <div class="stat-value">0.0<span class="stat-unit">°C</span></div>
+                <div class="stat-change">Badeværelse</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon humidity-icon">💧</div>
+                    <div class="stat-title">Luftfugtighed</div>
+                </div>
+                <div class="stat-value">0<span class="stat-unit">%</span></div>
+                <div class="stat-change">Badeværelse</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon door-icon">🚪</div>
+                    <div class="stat-title">Hoveddør</div>
+                </div>
+                <div class="stat-value">0<span class="stat-unit">åbninger i dag</span></div>
+                <div class="stat-change">Ingen åbninger i dag</div>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <div class="chart-card">
+                <div class="chart-title">📊 Temperatur (24 timer)</div>
+                <div class="chart-container"><canvas id="tempChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title">💧 Luftfugtighed (24 timer)</div>
+                <div class="chart-container"><canvas id="humidityChart"></canvas></div>
+            </div>
+        </div>
+
+        <div class="chart-card door-activity">
+            <div class="chart-title">🚪 Døraktivitet</div>
+            <div class="door-activity-content">
                 <div>
-                    <span class="status-indicator status-warm"></span>
-                    Behageligt
+                    <h4 style="margin-bottom: 15px; color: #495057;">Åbninger pr. dag (sidste 7 dage)</h4>
+                    <div class="chart-container"><canvas id="doorChart"></canvas></div>
+                </div>
+                <div class="recent-activity">
+                    <h4 style="margin-bottom: 15px; color: #495057;">Seneste Aktivitet</h4>
+                    <p>Ingen nylig aktivitet.</p>
                 </div>
             </div>
-            
-            <div class="card">
-                <div class="stat-label">Minimum (24t)</div>
-                <div class="stat-value">21.5°C</div>
-            </div>
-            
-            <div class="card">
-                <div class="stat-label">Maksimum (24t)</div>
-                <div class="stat-value">28.4°C</div>
-            </div>
-            
-            <div class="card">
-                <div class="stat-label">Gennemsnit (24t)</div>
-                <div class="stat-value">26.1°C</div>
-            </div>
-        </div>
-        
-        <div class="chart-container">
-            <div class="chart-title">Temperatur Historie (24 timer)</div>
-            <canvas id="temperatureChart"></canvas>
-        </div>
-        
-        <div class="last-updated">
-            Sidst opdateret: 28.7.2025, 08.44.26
-            <br>
-            Total målinger: 37
         </div>
     </div>
-    
-    <script>
-        // Chart.js konfiguration
-        const ctx = document.getElementById('temperatureChart').getContext('2d');
-        const chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ["06.35","06.40","06.48","06.48","06.48","06.49","06.51","06.51","07.01","07.02","07.07","07.07","07.08","07.08","07.08","07.08","07.10","07.11","07.12","07.13","07.15","07.18","07.22","07.23","07.23","07.23","07.23","07.24","07.26","07.27","07.28","07.30","07.38","07.38","07.38","07.40","08.44"],
-                datasets: [{
-                    label: 'Temperatur (°C)',
-                    data: [21.5,25.2,26,26.4,27,27.6,26.3,26.1,25.5,26.1,25.5,26.2,26.8,27.3,27.8,28.4,27.7,27,26.3,25.6,25,24.3,24.9,25.5,26.1,26.7,27.3,27.9,27.1,26.5,25.8,25.1,25.8,25.7,26.8,26.1,22.6],
-                    borderColor: '#667eea',
-                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: 3,
-                    pointBackgroundColor: '#667eea',
-                    pointBorderColor: '#ffffff',
-                    pointBorderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        grid: {
-                            color: 'rgba(0,0,0,0.1)'
-                        },
-                        ticks: {
-                            callback: function(value) {
-                                return value + '°C';
-                            }
-                        }
-                    },
-                    x: {
-                        grid: {
-                            color: 'rgba(0,0,0,0.1)'
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(0,0,0,0.8)',
-                        titleColor: 'white',
-                        bodyColor: 'white',
-                        borderColor: '#667eea',
-                        borderWidth: 1
-                    }
-                }
-            }
-        });
-        
-        // --- RETTELSE: Auto-refresh er fjernet herfra ---
 
+    <script>
+        const chartDefaultOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(0,0,0,0.05)' } }, x: { grid: { display: false } } } };
+        
+        new Chart(document.getElementById('tempChart').getContext('2d'), {
+            type: 'line',
+            data: { labels: [], datasets: [{ label: 'Temperatur', data: [], borderColor: '#ff6b6b', backgroundColor: 'rgba(255, 107, 107, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
+            options: chartDefaultOptions
+        });
+
+        new Chart(document.getElementById('humidityChart').getContext('2d'), {
+            type: 'line',
+            data: { labels: [], datasets: [{ label: 'Luftfugtighed', data: [], borderColor: '#4ecdc4', backgroundColor: 'rgba(78, 205, 196, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
+            options: chartDefaultOptions
+        });
+
+        new Chart(document.getElementById('doorChart').getContext('2d'), {
+            type: 'bar',
+            data: { labels: ["tirs.","ons.","tors.","fre.","lør.","søn.","man."], datasets: [{ label: 'Åbninger', data: [0,0,0,0,0,0,0], backgroundColor: 'rgba(168, 237, 234, 0.7)', borderColor: '#4ecdc4', borderWidth: 2, borderRadius: 5 }] },
+            options: { ...chartDefaultOptions, scales: { y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } }, x: { grid: { display: false } } } }
+        });
     </script>
 </body>
 </html>
