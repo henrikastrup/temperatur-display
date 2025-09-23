@@ -142,3 +142,98 @@ kommunaløkonomiske konsekvenser indgår i udmøntningen af budgetgarantien. Me
 de fremadrettede udgifter under budgetgarantien.
 Da budgetgarantien altid gøres op på basis af de kommunale regnskaber, indgår den faktiske virkning af de ændrede opgaver altid i den 
 endelige regulering af de budgetgaranterede udgifter.
+
+Hvad er en kommunes DUT-nøgle?
+En kommunes DUT-nøgle (Det Udvidede Totalbalanceprincip, DUT) er en fordelingsmekanisme, der sikrer, at ændringer i kommunernes opgaver eller regler – typisk som følge af ny lovgivning fra Folketinget – kompenseres økonomisk gennem justering af det statslige bloktilskud. Princippet blev indført for at beskytte kommunernes budgetter mod uforudsete udgiftsændringer og sikre, at staten finder finansiering til nye krav, mens kommunerne modtager de nødvendige midler til at udføre opgaverne. DUT-nøglen bruges specifikt til at fordele den samlede DUT-kompensation mellem kommunerne, så den afspejler den relative byrde for hver enkelt kommune.
+DUT-princippet dækker:
+
+Udgiftsmæssige konsekvenser af nye eller ændrede opgaver (f.eks. øgede krav til ældrepleje eller skoler).
+Indtægtsmæssige ændringer (f.eks. ændringer i statsrefusioner).
+Ændringer i byrde- og opgavefordelingen mellem stat, kommuner og regioner.
+
+Det omfatter ikke administrative konsekvenser uden direkte indvirkning på borgernes rettigheder, eller ændringer, der er kommunalt initieret (f.eks. EU-regler, hvor kommunerne selv har presset på).
+Hvordan beregnes DUT-nøglen?
+Beregningen af DUT-nøglen er en del af den årlige proces i forbindelse med økonomiaftalerne mellem regeringen, KL (Kommunernes Landsforening) og Danske Regioner. Den sker typisk i to faser: en indledende vurdering i marts og en afslutning i forbindelse med finanslovens behandling. Her er en trinvis oversigt over processen:
+
+Identifikation af DUT-sager:
+
+Hvert år identificeres potentielle DUT-sager gennem det "kommunale lov- og cirkulæreprogram" (et udkast fra ministerierne).
+Sagerne vurderes for deres økonomiske konsekvenser (udgifter/indtægter) over et fireårigt forløb (f.eks. 2025–2028).
+Der skelnes mellem store sager (>2 mio. kr. pr. kommune) og små sager (<2 mio. kr.), hvor små sager ofte fordeles direkte til relevante forvaltninger uden dybdegående forhandlinger.
+
+
+Beregning af samlet kompensation:
+
+For hver sag beregnes de samlede udgifts- eller indtægtsvirkninger for alle kommuner under ét (baseret på gennemsnitlige enhedsomkostninger og forventet antal berørte borgere).
+Eksempel: Hvis en ny lov øger udgifter til dagtilbud med 100 mio. kr. nationalt, justeres det samlede bloktilskud med dette beløb.
+Beregningerne tager højde for:
+
+Demografiske faktorer: Alder, indkomstniveau, geografisk placering osv., da disse påvirker opgavemængden.
+Aktivitetsniveauer: Antal borgere, der modtager service (f.eks. antal børn i dagtilbud eller ældre i pleje).
+Historiske data: Finansministeriet omregner serviceudgifter fra tidligere år for at korrigere for regelændringer (jf. DUT-princippet).
+
+
+
+
+Fordeling via nøglen:
+
+Den samlede kompensation fordeles til den enkelte kommune ud fra en relativ nøgle, der afspejler kommunens andel af den nationale byrde.
+Nøglen beregnes ofte som en procentdel:
+Kommunens DUT-nøgle = (Kommunens forventede udgiftsvirkning / Samlede nationale udgiftsvirkninger) × Samlet DUT-kompensation.
+For specifikke tilskud (f.eks. til ældrepleje eller dagtilbud) bruges dedikerede demografiske nøgler, der vejer faktorer som:
+
+Befolkningstal.
+Andel af ældre/børn.
+Socioøkonomiske indikatorer (f.eks. lavindkomsthusholdninger).
+
+
+Eksempler fra 2025-aftalen:
+
+Tilskud til værdig ældrepleje (1.212 mio. kr.) fordeles efter en demografisk nøgle for udgiftsbehov.
+Generelle tilskud justeres med DUT-beløb (f.eks. +35,4 mio. kr. i 2024).
+
+
+
+
+Justering i bloktilskuddet:
+
+Den beregnede nøgle indgår direkte i udbetalingen af bloktilskuddet (også kaldet balancetilskud), som udgør den største del af statsstøtten til kommunerne (ca. 100–150 mia. kr. årligt).
+Bloktilskuddet beregnes som: Samlet ramme (fra økonomiaftalen) + DUT-justeringer – Udligninger (skattegrundlag).
+Udgiftslofter (øvre grænse for kommunale driftsudgifter) justeres også med DUT-beløb for at holde balancen.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TrinBeskrivelseEksempel (hypotetisk)1. IdentifikationVurder sager fra lovprogrammetNy lov om skoler: +500 mio. kr. nationalt2. Samlet kompensationBeregn totale virkninger500 mio. kr. tilføjes bloktilskuddet3. NøgleberegningFordel efter byrdeandelKommune A (10% af elever): Får 50 mio. kr.4. IntegrationTilføj til årligt tilskudBloktilskud øges med nøglen i januar
+Brug til fordeling af det kommunale bloktilskud
+DUT-nøglen er central i fordelingen af bloktilskuddet, da den sikrer, at kompensationen ikke er ensartet, men tilpasses kommunernes individuelle behov. Uden DUT ville ændringer i lovgivning kunne skabe ubalancer, f.eks. højere byrde for kommuner med ældre befolkning. I 2025-aftalen justeres bloktilskuddet med DUT mv. for at holde den samlede serviceramme på ca. 300 mia. kr. Dette understøtter det lokale selvstyre, mens staten styrer de samlede offentlige udgifter.
+For mere detaljerede beregninger og årlige opgørelser, se Finansministeriets vejledning om DUT (fra 2007, med årlige opdateringer) eller KL's økonomihåndbøger. Data offentliggøres årligt via Danmarks Statistik og Finansministeriet. Hvis du har en specifik kommune i tankerne, kan jeg hjælpe med at finde nøgletal for den.
