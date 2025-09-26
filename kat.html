@@ -47,11 +47,11 @@
         <div class="main-content">
             <div class="status-section">
                 <div class="status-indicator">
-                    <div class="pulse-ring outside"></div>
-                    <div class="status-core outside">UDE</div>
+                    <div class="pulse-ring inside"></div>
+                    <div class="status-core inside">HJEMME</div>
                 </div>
-                <div class="status-text">Ude <span class="status-icon">🌳</span></div>
-                <div class="last-change">Status ændret: 26.09.2025, 20.34</div>
+                <div class="status-text">Hjemme <span class="status-icon">🏠</span></div>
+                <div class="last-change">Status ændret: 26.09.2025, 21.09</div>
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-value">15t 35m</div>
@@ -80,7 +80,7 @@
         </div>
 
         <div class="footer">
-            Sidst opdateret: 26.09.2025, 20.34
+            Sidst opdateret: 26.09.2025, 21.09
         </div>
     </div>
 
@@ -97,7 +97,7 @@
             type: 'doughnut',
             data: {
                 labels: ['Tid Hjemme', 'Tid Ude'],
-                datasets: [{ data: [15.5833148227135, 8.41668517728647], backgroundColor: ['#2ecc71', '#e74c3c'], borderColor: ['#ffffff'], borderWidth: 4, hoverOffset: 8 }]
+                datasets: [{ data: [15.5832944822311, 8.41670551776886], backgroundColor: ['#2ecc71', '#e74c3c'], borderColor: ['#ffffff'], borderWidth: 4, hoverOffset: 8 }]
             },
             options: {
                 responsive: true, maintainAspectRatio: true, cutout: '70%', plugins: { legend: { position: 'bottom', labels: { font: { size: 13, family: 'Poppins' }, padding: 20, generateLabels: function(chart) { const data = chart.data; if (data.labels.length && data.datasets.length) { return data.labels.map((label, i) => { const meta = chart.getDatasetMeta(0); const style = meta.controller.getStyle(i); const value = data.datasets[0].data[i]; const formattedTime = formatHours(value); return { text: label + ': ' + formattedTime, fillStyle: style.backgroundColor, strokeStyle: style.borderColor, lineWidth: style.borderWidth, hidden: isNaN(data.datasets[0].data[i]) || meta.data[i].hidden, index: i }; }); } return []; } } } }, animation: { animateRotate: true, duration: 1500 } }
@@ -107,10 +107,10 @@
         new Chart(activityCtx, {
             type: 'line',
             data: {
-                labels: ["21.20","03.09","05.01","06.37","09.12","12.47","13.45","18.13","20.27","20.34"],
+                labels: ["21.20","03.09","05.01","06.37","09.12","12.47","13.45","18.13","20.27","20.34","21.09"],
                 datasets: [{
                     label: 'Status',
-                    data: [0,1,0,1,0,1,0,1,0,1],
+                    data: [0,1,0,1,0,1,0,1,0,1,0],
                     borderWidth: 3,
                     fill: true,
                     pointRadius: 0,
