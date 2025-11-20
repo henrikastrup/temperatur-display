@@ -36,7 +36,7 @@
     <div class="container">
         <div class="header">
             <h1>🏠 Smart Home Dashboard</h1>
-            <div class="last-updated">Sidst opdateret: 20. november 2025 kl. 23.38</div>
+            <div class="last-updated">Sidst opdateret: 21. november 2025 kl. 00.38</div>
         </div>
 
         <div class="stats-grid">
@@ -45,7 +45,7 @@
                     <div class="stat-icon temp-icon">🌡️</div>
                     <div class="stat-title">Temperatur</div>
                 </div>
-                <div class="stat-value">7.3<span class="stat-unit">°C</span></div>
+                <div class="stat-value">7.2<span class="stat-unit">°C</span></div>
                 <div class="stat-change">Badeværelse</div>
             </div>
 
@@ -54,7 +54,7 @@
                     <div class="stat-icon humidity-icon">💧</div>
                     <div class="stat-title">Luftfugtighed</div>
                 </div>
-                <div class="stat-value">26<span class="stat-unit">%</span></div>
+                <div class="stat-value">25<span class="stat-unit">%</span></div>
                 <div class="stat-change">Badeværelse</div>
             </div>
 
@@ -89,19 +89,19 @@
         
         new Chart(document.getElementById('tempChart').getContext('2d'), {
             type: 'line',
-            data: { labels: ["00.38","01.39","02.39","03.39","04.39","05.39","07.40","09.40","10.40","11.40","12.30","13.06","13.43","14.36","16.37","17.37","18.37","19.37","20.38","21.38","22.38","23.38"], datasets: [{ label: 'Temperatur', data: ["7.7","7.6","7.5","7.3","7.2","7.0","6.8","6.7","6.9","7.4","7.9","8.4","9.0","9.5","9.2","8.8","8.4","8.1","7.9","7.8","7.4","7.3"], borderColor: '#ff6b6b', backgroundColor: 'rgba(255, 107, 107, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
+            data: { labels: ["01.39","02.39","03.39","04.39","05.39","07.40","09.40","10.40","11.40","12.30","13.06","13.43","14.36","16.37","17.37","18.37","19.37","20.38","21.38","22.38","23.38","00.38"], datasets: [{ label: 'Temperatur', data: ["7.6","7.5","7.3","7.2","7.0","6.8","6.7","6.9","7.4","7.9","8.4","9.0","9.5","9.2","8.8","8.4","8.1","7.9","7.8","7.4","7.3","7.2"], borderColor: '#ff6b6b', backgroundColor: 'rgba(255, 107, 107, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
             options: chartDefaultOptions
         });
 
         new Chart(document.getElementById('humidityChart').getContext('2d'), {
             type: 'line',
-            data: { labels: ["00.38","01.39","02.39","03.39","04.39","05.39","07.40","09.40","10.40","11.40","12.30","13.06","13.43","14.36","16.37","17.37","18.37","19.37","20.38","21.38","22.38","23.38"], datasets: [{ label: 'Luftfugtighed', data: ["27","27","27","27","27","27","27","27","27","27","27","27","27","27","27","27","26","26","26","26","26","26"], borderColor: '#4ecdc4', backgroundColor: 'rgba(78, 205, 196, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
+            data: { labels: ["01.39","02.39","03.39","04.39","05.39","07.40","09.40","10.40","11.40","12.30","13.06","13.43","14.36","16.37","17.37","18.37","19.37","20.38","21.38","22.38","23.38","00.38"], datasets: [{ label: 'Luftfugtighed', data: ["27","27","27","27","27","27","27","27","27","27","27","27","27","27","27","26","26","26","26","26","26","25"], borderColor: '#4ecdc4', backgroundColor: 'rgba(78, 205, 196, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
             options: chartDefaultOptions
         });
 
         new Chart(document.getElementById('doorChart').getContext('2d'), {
             type: 'bar',
-            data: { labels: ["fre.","lør.","søn.","man.","tirs.","ons.","tors."], datasets: [{ label: 'Åbninger', data: [0,0,0,0,0,0,0], backgroundColor: 'rgba(168, 237, 234, 0.7)', borderColor: '#4ecdc4', borderWidth: 2, borderRadius: 5 }] },
+            data: { labels: ["lør.","søn.","man.","tirs.","ons.","tors.","fre."], datasets: [{ label: 'Åbninger', data: [0,0,0,0,0,0,0], backgroundColor: 'rgba(168, 237, 234, 0.7)', borderColor: '#4ecdc4', borderWidth: 2, borderRadius: 5 }] },
             options: { ...chartDefaultOptions, scales: { y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } }, x: { grid: { display: false } } } }
         });
     </script>
