@@ -47,11 +47,11 @@
         <div class="main-content">
             <div class="status-section">
                 <div class="status-indicator">
-                    <div class="pulse-ring outside"></div>
-                    <div class="status-core outside">UDE</div>
+                    <div class="pulse-ring inside"></div>
+                    <div class="status-core inside">HJEMME</div>
                 </div>
-                <div class="status-text">Ude <span class="status-icon">🌳</span></div>
-                <div class="last-change">Status ændret: 12.12.2025, 05.05</div>
+                <div class="status-text">Hjemme <span class="status-icon">🏠</span></div>
+                <div class="last-change">Status ændret: 12.12.2025, 05.10</div>
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-value">0t 0m</div>
@@ -80,7 +80,7 @@
         </div>
 
         <div class="footer">
-            Sidst opdateret: 12.12.2025, 05.05
+            Sidst opdateret: 12.12.2025, 05.10
         </div>
     </div>
 
@@ -107,10 +107,10 @@
         new Chart(activityCtx, {
             type: 'line',
             data: {
-                labels: ["08.04","23.16","05.05"],
+                labels: ["08.04","23.16","05.05","05.10"],
                 datasets: [{
                     label: 'Status',
-                    data: [1,0,1],
+                    data: [1,0,1,0],
                     borderWidth: 3,
                     fill: true,
                     pointRadius: 0,
