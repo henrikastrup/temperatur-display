@@ -63,7 +63,7 @@
                     <div class="stat-icon door-icon">🚪</div>
                     <div class="stat-title">Hoveddør</div>
                 </div>
-                <div class="stat-value">14<span class="stat-unit">åbninger i dag</span></div>
+                <div class="stat-value">15<span class="stat-unit">åbninger i dag</span></div>
                  <div class="stat-change">Sidst åbnet: 12.12</div>
             </div>
         </div>
@@ -89,19 +89,19 @@
         
         new Chart(document.getElementById('tempChart').getContext('2d'), {
             type: 'line',
-            data: { labels: ["09.32","09.32","09.50","09.53","10.48","11.49"], datasets: [{ label: 'Temperatur', data: ["20.0","20.0","20.0","20.0","20.2","20.4"], borderColor: '#ff6b6b', backgroundColor: 'rgba(255, 107, 107, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
+            data: { labels: ["09.32","09.32","09.50","09.53","10.48","11.49","11.49"], datasets: [{ label: 'Temperatur', data: ["20.0","20.0","20.0","20.0","20.2","20.4","20.4"], borderColor: '#ff6b6b', backgroundColor: 'rgba(255, 107, 107, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
             options: chartDefaultOptions
         });
 
         new Chart(document.getElementById('humidityChart').getContext('2d'), {
             type: 'line',
-            data: { labels: ["09.32","09.32","09.50","09.53","10.48","11.49"], datasets: [{ label: 'Luftfugtighed', data: ["12","12","11","11","13","14"], borderColor: '#4ecdc4', backgroundColor: 'rgba(78, 205, 196, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
+            data: { labels: ["09.32","09.32","09.50","09.53","10.48","11.49","11.49"], datasets: [{ label: 'Luftfugtighed', data: ["12","12","11","11","13","14","14"], borderColor: '#4ecdc4', backgroundColor: 'rgba(78, 205, 196, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
             options: chartDefaultOptions
         });
 
         new Chart(document.getElementById('doorChart').getContext('2d'), {
             type: 'bar',
-            data: { labels: ["tirs.","ons.","tors.","fre.","lør.","søn.","man."], datasets: [{ label: 'Åbninger', data: [0,0,0,0,0,0,14], backgroundColor: 'rgba(168, 237, 234, 0.7)', borderColor: '#4ecdc4', borderWidth: 2, borderRadius: 5 }] },
+            data: { labels: ["tirs.","ons.","tors.","fre.","lør.","søn.","man."], datasets: [{ label: 'Åbninger', data: [0,0,0,0,0,0,15], backgroundColor: 'rgba(168, 237, 234, 0.7)', borderColor: '#4ecdc4', borderWidth: 2, borderRadius: 5 }] },
             options: { ...chartDefaultOptions, scales: { y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } }, x: { grid: { display: false } } } }
         });
     </script>
