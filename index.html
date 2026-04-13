@@ -36,7 +36,7 @@
     <div class="container">
         <div class="header">
             <h1>🏠 Smart Home Dashboard</h1>
-            <div class="last-updated">Sidst opdateret: 13. april 2026 kl. 05.35</div>
+            <div class="last-updated">Sidst opdateret: 13. april 2026 kl. 06.35</div>
         </div>
 
         <div class="stats-grid">
@@ -45,7 +45,7 @@
                     <div class="stat-icon temp-icon">🌡️</div>
                     <div class="stat-title">Temperatur</div>
                 </div>
-                <div class="stat-value">11.8<span class="stat-unit">°C</span></div>
+                <div class="stat-value">11.7<span class="stat-unit">°C</span></div>
                 <div class="stat-change">Badeværelse</div>
             </div>
 
@@ -89,13 +89,13 @@
         
         new Chart(document.getElementById('tempChart').getContext('2d'), {
             type: 'line',
-            data: { labels: ["06.30","07.31","08.31","09.31","10.31","12.32","13.32","14.32","15.32","16.32","17.33","18.33","20.33","21.33","22.34","00.34","01.34","02.34","03.35","04.35","05.35"], datasets: [{ label: 'Temperatur', data: ["11.1","11.0","11.1","11.2","11.4","11.6","11.8","12.1","12.5","12.8","13.0","13.2","13.1","12.9","12.7","12.4","12.3","12.2","12.0","11.9","11.8"], borderColor: '#ff6b6b', backgroundColor: 'rgba(255, 107, 107, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
+            data: { labels: ["07.31","08.31","09.31","10.31","12.32","13.32","14.32","15.32","16.32","17.33","18.33","20.33","21.33","22.34","00.34","01.34","02.34","03.35","04.35","05.35","06.35"], datasets: [{ label: 'Temperatur', data: ["11.0","11.1","11.2","11.4","11.6","11.8","12.1","12.5","12.8","13.0","13.2","13.1","12.9","12.7","12.4","12.3","12.2","12.0","11.9","11.8","11.7"], borderColor: '#ff6b6b', backgroundColor: 'rgba(255, 107, 107, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
             options: chartDefaultOptions
         });
 
         new Chart(document.getElementById('humidityChart').getContext('2d'), {
             type: 'line',
-            data: { labels: ["06.30","07.31","08.31","09.31","10.31","12.32","13.32","14.32","15.32","16.32","17.33","18.33","20.33","21.33","22.34","00.34","01.34","02.34","03.35","04.35","05.35"], datasets: [{ label: 'Luftfugtighed', data: ["15","15","15","15","15","15","16","16","16","16","16","16","16","16","15","15","15","15","15","15","15"], borderColor: '#4ecdc4', backgroundColor: 'rgba(78, 205, 196, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
+            data: { labels: ["07.31","08.31","09.31","10.31","12.32","13.32","14.32","15.32","16.32","17.33","18.33","20.33","21.33","22.34","00.34","01.34","02.34","03.35","04.35","05.35","06.35"], datasets: [{ label: 'Luftfugtighed', data: ["15","15","15","15","15","16","16","16","16","16","16","16","16","15","15","15","15","15","15","15","15"], borderColor: '#4ecdc4', backgroundColor: 'rgba(78, 205, 196, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
             options: chartDefaultOptions
         });
 
