@@ -97,7 +97,7 @@
             type: 'doughnut',
             data: {
                 labels: ['Tid Hjemme', 'Tid Ude'],
-                datasets: [{ data: [14.8555857448445, 9.14441425515546], backgroundColor: ['#2ecc71', '#e74c3c'], borderColor: ['#ffffff'], borderWidth: 4, hoverOffset: 8 }]
+                datasets: [{ data: [14.854737564524, 9.14526243547598], backgroundColor: ['#2ecc71', '#e74c3c'], borderColor: ['#ffffff'], borderWidth: 4, hoverOffset: 8 }]
             },
             options: {
                 responsive: true, maintainAspectRatio: true, cutout: '70%', plugins: { legend: { position: 'bottom', labels: { font: { size: 13, family: 'Poppins' }, padding: 20, generateLabels: function(chart) { const data = chart.data; if (data.labels.length && data.datasets.length) { return data.labels.map((label, i) => { const meta = chart.getDatasetMeta(0); const style = meta.controller.getStyle(i); const value = data.datasets[0].data[i]; const formattedTime = formatHours(value); return { text: label + ': ' + formattedTime, fillStyle: style.backgroundColor, strokeStyle: style.borderColor, lineWidth: style.borderWidth, hidden: isNaN(data.datasets[0].data[i]) || meta.data[i].hidden, index: i }; }); } return []; } } } }, animation: { animateRotate: true, duration: 1500 } }
@@ -107,10 +107,10 @@
         new Chart(activityCtx, {
             type: 'line',
             data: {
-                labels: ["16.25","16.25"],
+                labels: ["16.25","16.25","16.25"],
                 datasets: [{
                     label: 'Status',
-                    data: [1,0],
+                    data: [1,1,0],
                     borderWidth: 3,
                     fill: true,
                     pointRadius: 0,
