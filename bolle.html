@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bølle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --home:#2fe6a0; --home-glow:rgba(47,230,160,.55); --home-soft:rgba(47,230,160,.13);
+  --out:#ff5168;  --out-glow:rgba(255,81,104,.55);  --out-soft:rgba(255,81,104,.13);
+  --eye:#ffd24a;  --eye-glow:rgba(255,210,74,.75);
+  --txt:#eef1fb; --muted:#8b93b4; --faint:#5a6388;
+  --line:rgba(255,255,255,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Space Grotesk',system-ui,sans-serif; color:var(--txt);
+  background:#05060d; min-height:100vh; overflow-x:hidden;
+  --accent:var(--home); --accent-glow:var(--home-glow); --accent-soft:var(--home-soft);
+}
+body.out{--accent:var(--out);--accent-glow:var(--out-glow);--accent-soft:var(--out-soft)}
+/* cosmic backdrop */
+.sky{position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(900px 700px at 50% -8%,var(--accent-soft),transparent 60%),
+    radial-gradient(700px 600px at 12% 8%,#1a2152 0%,transparent 55%),
+    radial-gradient(800px 700px at 92% 95%,#2a123a 0%,transparent 55%),
+    linear-gradient(180deg,#070912,#04050b 70%);
+  transition:background 1.2s ease}
+.stars{position:fixed;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(1.4px 1.4px at 20% 30%,#fff,transparent),
+    radial-gradient(1.2px 1.2px at 75% 18%,#cbd5ff,transparent),
+    radial-gradient(1px 1px at 45% 72%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 88% 60%,#bcd,transparent),
+    radial-gradient(1px 1px at 62% 42%,#fff,transparent),
+    radial-gradient(1.1px 1.1px at 33% 88%,#dde,transparent);
+  animation:twinkle 6s ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.35}to{opacity:.7}}
+
+.app{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:34px 22px 56px;
+  min-height:100vh;display:flex;flex-direction:column}
+
+/* header */
+.head{text-align:center;margin-bottom:0}
+.title{font-family:'Instrument Serif',serif;font-weight:400;line-height:.88;
+  font-size:clamp(3.6rem,16vw,5.6rem);letter-spacing:.01em;
+  background:linear-gradient(180deg,#ffffff,#cfd6f5);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.tagline{margin-top:5px;font-weight:600;text-transform:uppercase;letter-spacing:.36em;
+  font-size:.82rem;color:#eab35c}
+.tagline::before,.tagline::after{content:"";display:inline-block;width:18px;height:1px;
+  background:linear-gradient(90deg,transparent,#eab35c);vertical-align:middle;margin:0 12px}
+.tagline::after{transform:scaleX(-1)}
+
+/* hero */
+.hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6px 0 6px}
+.stage{position:relative;width:290px;height:290px;display:grid;place-items:center;margin-bottom:2px}
+@media(max-width:480px){.stage{width:228px;height:228px}}
+.halo{position:absolute;width:230px;height:230px;border-radius:50%;
+  background:radial-gradient(circle,var(--accent-glow),transparent 68%);
+  filter:blur(6px);animation:breathe 4s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(.86);opacity:.55}50%{transform:scale(1.06);opacity:.95}}
+.wave{position:absolute;width:170px;height:170px;border-radius:50%;border:2px solid var(--accent);opacity:0;animation:wave 3.4s ease-out infinite}
+.wave.w2{animation-delay:1.13s}.wave.w3{animation-delay:2.26s}
+@keyframes wave{0%{transform:scale(.7);opacity:.6}100%{transform:scale(1.5);opacity:0}}
+.cat{position:relative;width:172px;color:#0a0b14;filter:drop-shadow(0 10px 20px rgba(0,0,0,.42)) drop-shadow(0 0 26px rgba(255,210,74,.16));transform-origin:50% 86%}
+.cat .eye{fill:var(--eye);filter:drop-shadow(0 0 4px var(--eye-glow))}
+.cat .earin{fill:var(--accent);opacity:.16}
+/* mus + jagt (kun når ude) */
+.mouse{position:absolute;bottom:60px;left:50%;width:48px;margin-left:-24px;
+  transform:translateX(120px);opacity:0;z-index:3;pointer-events:none}
+body.out.chasing .mouse{animation:scurry 2.3s ease-in-out}
+body.out.chasing .cat{animation:pounce 2.3s cubic-bezier(.34,1.2,.5,1)}
+@keyframes scurry{
+  0%{opacity:0;transform:translateX(118px) translateY(0)}
+  8%{opacity:1}
+  25%{transform:translateX(46px) translateY(-4px)}
+  50%{transform:translateX(-18px) translateY(0)}
+  75%{transform:translateX(-74px) translateY(-4px)}
+  92%{opacity:1}
+  100%{opacity:0;transform:translateX(-128px) translateY(0)}
+}
+@keyframes pounce{
+  0%,100%{transform:translateX(0) translateY(0) rotate(0) scale(1)}
+  12%{transform:translateX(12px) translateY(3px) scale(1.05,.94)}
+  27%{transform:translateX(-4px) translateY(-28px) rotate(-5deg) scale(.96,1.06)}
+  43%{transform:translateX(-20px) translateY(0) rotate(-2deg)}
+  58%{transform:translateX(-32px) translateY(-22px) rotate(-6deg) scale(.97,1.05)}
+  74%{transform:translateX(-18px) translateY(0) rotate(-2deg)}
+  88%{transform:translateX(-6px) translateY(-7px) rotate(-1deg)}
+}
+/* HJEMME-aktiviteter: sove / spise / kæle */
+.cat .eyesShut{opacity:0}
+body.home.act-sleep .cat{animation:catSleep 3.6s ease-in-out}
+body.home.act-eat .cat{animation:catEat 3.6s ease-in-out}
+body.home.act-cuddle .cat{animation:catNuzzle 3.6s ease-in-out}
+body.home.act-sleep .eyesOpen{animation:eyeClose 3.6s ease-in-out}
+body.home.act-sleep .eyesShut{animation:eyeShow 3.6s ease-in-out}
+@keyframes catSleep{0%,100%{transform:translateY(0) rotate(0)}20%{transform:translateY(5px) rotate(var(--sleepTilt,4deg)) scale(1.015,.99)}55%{transform:translateY(8px) rotate(var(--sleepTilt,4deg)) scale(1.02,.985)}82%{transform:translateY(5px) rotate(var(--sleepTilt,4deg))}}
+@keyframes catEat{0%,100%{transform:translateY(0) rotate(0)}18%{transform:translateY(13px) rotate(3deg) scale(1.02,.97)}34%{transform:translateY(2px) rotate(1deg)}54%{transform:translateY(13px) rotate(3deg) scale(1.02,.97)}72%{transform:translateY(2px)}}
+@keyframes catNuzzle{0%,100%{transform:rotate(0) translateX(0)}25%{transform:rotate(-5deg) translateX(-5px)}50%{transform:rotate(-2deg) translateX(-2px)}75%{transform:rotate(-5deg) translateX(-5px)}}
+@keyframes eyeClose{0%{opacity:1}13%{opacity:0}80%{opacity:0}100%{opacity:1}}
+@keyframes eyeShow{0%{opacity:0}13%{opacity:1}80%{opacity:1}100%{opacity:0}}
+.prop{position:absolute;opacity:0;pointer-events:none;z-index:4}
+.zzz{top:24%;left:57%;display:flex;align-items:flex-end;gap:5px;font-family:'Instrument Serif',serif;font-weight:700;color:var(--home)}
+.zzz span{opacity:0;font-size:22px}.zzz span:nth-child(2){font-size:29px}.zzz span:nth-child(3){font-size:37px}
+body.home.act-sleep .zzz{opacity:1}
+body.home.act-sleep .zzz span{animation:zfloat 1.7s ease-out infinite}
+body.home.act-sleep .zzz span:nth-child(2){animation-delay:.45s}
+body.home.act-sleep .zzz span:nth-child(3){animation-delay:.9s}
+@keyframes zfloat{0%{opacity:0;transform:translateY(8px) scale(.6)}30%{opacity:1}100%{opacity:0;transform:translateY(-24px) scale(1.1)}}
+.bowl{bottom:36px;left:50%;margin-left:-30px;width:60px}
+body.home.act-eat .bowl{animation:popIn 3.6s ease}
+@keyframes popIn{0%{opacity:0;transform:translateY(10px) scale(.7)}14%{opacity:1;transform:none}82%{opacity:1}100%{opacity:0}}
+.hearts{bottom:50%;left:39%;display:flex;gap:9px}
+.hearts span{opacity:0;font-size:19px}
+body.home.act-cuddle .hearts{opacity:1}
+body.home.act-cuddle .hearts span{animation:hfloat 1.9s ease-out infinite}
+body.home.act-cuddle .hearts span:nth-child(2){animation-delay:.55s}
+body.home.act-cuddle .hearts span:nth-child(3){animation-delay:1.1s}
+@keyframes hfloat{0%{opacity:0;transform:translateY(6px) scale(.6)}30%{opacity:1}100%{opacity:0;transform:translateY(-32px) scale(1.15)}}
+.hand{top:13%;right:14%;font-size:38px}
+body.home.act-cuddle .hand{animation:pet 3.6s ease-in-out}
+@keyframes pet{0%{opacity:0;transform:translate(18px,-12px) rotate(18deg)}16%{opacity:1;transform:translate(0,6px) rotate(18deg)}38%{transform:translate(0,22px) rotate(18deg)}58%{transform:translate(0,6px) rotate(18deg)}78%{transform:translate(0,22px) rotate(18deg)}100%{opacity:0;transform:translate(18px,-12px) rotate(18deg)}}
+/* strække / vaske / lege */
+body.home.act-stretch .cat{animation:catStretch 3.6s ease-in-out}
+body.home.act-wash .cat{animation:catWash 3.6s ease-in-out}
+body.home.act-yarn .cat{animation:catYarn 3.6s ease-in-out}
+@keyframes catStretch{0%,100%{transform:scale(1,1) translateY(0) rotate(0)}25%{transform:scale(1.06,1.14) translateY(-9px) rotate(-2deg)}45%{transform:scale(1.08,1.1) translateY(-6px) rotate(-2deg)}70%{transform:scale(.99,.965) translateY(3px)}86%{transform:scale(1,1) translateY(0)}}
+@keyframes catWash{0%,100%{transform:rotate(0) translate(0,0)}15%{transform:rotate(8deg) translate(3px,2px)}30%{transform:rotate(6deg) translate(2px,4px)}45%{transform:rotate(9deg) translate(3px,2px)}60%{transform:rotate(6deg) translate(2px,4px)}75%{transform:rotate(8deg) translate(3px,1px)}}
+@keyframes catYarn{0%,100%{transform:translateY(0) rotate(0)}15%{transform:translateY(6px) rotate(-4deg)}30%{transform:translateY(0) rotate(2deg)}45%{transform:translateY(7px) rotate(-5deg)}60%{transform:translateY(0) rotate(2deg)}78%{transform:translateY(4px) rotate(-3deg)}}
+.yarn{bottom:40px;left:50%;margin-left:6px;font-size:30px}
+body.home.act-yarn .yarn{animation:yarnRoll 3.6s ease-in-out}
+@keyframes yarnRoll{0%{opacity:0;transform:translateX(42px) rotate(0)}14%{opacity:1}30%{transform:translateX(-6px) rotate(-200deg)}50%{transform:translateX(12px) rotate(-320deg)}70%{transform:translateX(-4px) rotate(-470deg)}86%{opacity:1;transform:translateX(8px) rotate(-560deg)}100%{opacity:0;transform:translateX(34px) rotate(-620deg)}}
+.wash{top:33%;left:39%;font-size:18px}
+body.home.act-wash .wash{opacity:1}
+body.home.act-wash .wash span{display:inline-block;animation:sparkle 1.2s ease-in-out infinite}
+@keyframes sparkle{0%,100%{opacity:0;transform:scale(.5)}50%{opacity:1;transform:scale(1.15)}}
+
+.status{font-family:'Space Grotesk';font-weight:700;font-size:clamp(2.7rem,12vw,4.2rem);line-height:.92;
+  letter-spacing:-.02em;margin-top:6px;
+  background:linear-gradient(180deg,#fff, color-mix(in srgb,var(--accent) 70%,#fff));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.45rem;color:var(--muted);margin-top:10px}
+.timer{margin-top:18px;display:inline-flex;align-items:baseline;gap:9px;
+  padding:11px 20px;border-radius:999px;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
+.timer b{font-variant-numeric:tabular-nums;font-weight:600;font-size:1.12rem;color:#fff}
+.timer small{color:var(--muted);font-size:.82rem}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:34px}
+@media(max-width:480px){.stats{grid-template-columns:repeat(3,1fr);gap:8px}}
+.stat{padding:16px 14px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.025);text-align:center}
+.stat .v{font-size:1.5rem;font-weight:600;font-variant-numeric:tabular-nums}
+.stat .l{font-size:.72rem;color:var(--faint);margin-top:5px;letter-spacing:.04em;text-transform:uppercase;font-weight:500}
+.stat .v.green{color:var(--home)} .stat .v.red{color:var(--out)}
+
+/* graph */
+.graph-card{margin-top:30px;padding:22px 18px 14px;border:1px solid var(--line);border-radius:24px;
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.012))}
+.graph-head{display:flex;align-items:center;justify-content:space-between;margin:0 6px 6px}
+.graph-head h3{font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.legend{display:flex;gap:14px;font-size:.74rem;color:var(--muted)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;vertical-align:middle}
+#skyline{width:100%;height:auto;display:block}
+#skyline text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
+
+.foot{margin-top:22px;text-align:center;color:var(--faint);font-size:.78rem}
+.foot b{color:var(--muted);font-weight:500}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="sky"></div><div class="stars"></div>
+
+<div class="app">
+  <header class="head">
+    <h1 class="title">B&oslash;lle</h1>
+    <p class="tagline">Havens skr&aelig;k</p>
+  </header>
+
+  <div class="hero">
+    <div class="stage">
+      <div class="halo"></div>
+      <div class="wave"></div><div class="wave w2"></div><div class="wave w3"></div>
+      <!-- sort hankat -->
+      <svg class="cat" viewBox="0 0 240 290" xmlns="http://www.w3.org/2000/svg" aria-label="Bølle">
+        <defs>
+          <linearGradient id="fur" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#24263c"/><stop offset=".5" stop-color="#11131f"/><stop offset="1" stop-color="#050509"/>
+          </linearGradient>
+          <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#aeb8ff" stop-opacity=".55"/><stop offset=".6" stop-color="#aeb8ff" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- hale: blød elegant curl -->
+        <path d="M150 262 C196 264 206 214 182 192 C171 182 157 188 161 201" fill="none" stroke="url(#fur)" stroke-width="18" stroke-linecap="round"/>
+        <!-- slank siddende krop -->
+        <path d="M109 268 C86 260 86 198 103 166 C109 153 113 150 120 150 C127 150 131 153 137 166 C154 198 154 260 131 268 Z" fill="url(#fur)"/>
+        <!-- ører: høje og grale -->
+        <path d="M97 96 L83 34 L122 78 Z" fill="url(#fur)"/>
+        <path d="M143 96 L157 34 L118 78 Z" fill="url(#fur)"/>
+        <path class="earin" d="M101 88 L93 50 L118 76 Z"/>
+        <path class="earin" d="M139 88 L147 50 L122 76 Z"/>
+        <!-- lille oval hoved -->
+        <ellipse cx="120" cy="116" rx="37" ry="42" fill="url(#fur)"/>
+        <!-- sheen langs hoved/ryg -->
+        <path d="M120 76 C100 78 86 96 85 116" fill="none" stroke="url(#sheen)" stroke-width="3" stroke-linecap="round"/>
+        <!-- store venlige gløde-øjne -->
+        <g class="eyesOpen">
+          <ellipse class="eye" cx="106" cy="114" rx="8.5" ry="10"/>
+          <ellipse class="eye" cx="134" cy="114" rx="8.5" ry="10"/>
+          <ellipse cx="106" cy="115" rx="4" ry="6.5" fill="#04130c"/>
+          <ellipse cx="134" cy="115" rx="4" ry="6.5" fill="#04130c"/>
+          <circle cx="108.8" cy="110" r="2.1" fill="#fff" opacity=".92"/>
+          <circle cx="136.8" cy="110" r="2.1" fill="#fff" opacity=".92"/>
+        </g>
+        <!-- lukkede øjne (sovende) -->
+        <g class="eyesShut">
+          <path d="M98 113 Q106 120 114 113" fill="none" stroke="var(--eye)" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M126 113 Q134 120 142 113" fill="none" stroke="var(--eye)" stroke-width="2.6" stroke-linecap="round"/>
+        </g>
+        <!-- næse + blød mund -->
+        <path d="M115 131 L125 131 L120 137 Z" fill="#f2a9be"/>
+        <path d="M120 137 C120 143 114 144 110 141 M120 137 C120 143 126 144 130 141" fill="none" stroke="#46415f" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- knurhår -->
+        <g stroke="#bcc4e6" stroke-width="1.2" opacity=".3" stroke-linecap="round">
+          <line x1="93" y1="131" x2="58" y2="125"/><line x1="93" y1="135" x2="59" y2="141"/>
+          <line x1="147" y1="131" x2="182" y2="125"/><line x1="147" y1="135" x2="181" y2="141"/>
+        </g>
+      </svg>
+      <!-- mus (kun synlig under jagt når ude) -->
+      <svg class="mouse" viewBox="0 0 70 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M46 27 C60 27 66 18 61 11" fill="none" stroke="#8b90a8" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="34" cy="27" rx="18" ry="12" fill="#9aa0b8"/>
+        <circle cx="30" cy="16" r="7.5" fill="#888ea6"/>
+        <circle cx="30" cy="16.5" r="3.6" fill="#cf94a6"/>
+        <path d="M22 27 C12 23 9 31 19 33 Z" fill="#9aa0b8"/>
+        <circle cx="16" cy="26" r="2" fill="#10131f"/>
+        <circle cx="9" cy="29" r="2.1" fill="#f2a9be"/>
+      </svg>
+      <!-- HJEMME-rekvisitter -->
+      <div class="prop zzz"><span>z</span><span>z</span><span>z</span></div>
+      <svg class="prop bowl" viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M8 20 Q40 49 72 20 Z" fill="#df7794"/>
+        <ellipse cx="40" cy="20" rx="32" ry="8.5" fill="#f49bb6"/>
+        <ellipse cx="40" cy="20" rx="25" ry="6" fill="#574332"/>
+        <circle cx="30" cy="19" r="3.4" fill="#7c5c3c"/>
+        <circle cx="41" cy="21" r="3.8" fill="#6c4e34"/>
+        <circle cx="50" cy="18" r="3.2" fill="#7c5c3c"/>
+      </svg>
+      <div class="prop hearts"><span>❤️</span><span>❤️</span><span>❤️</span></div>
+      <div class="prop hand">🤚</div>
+      <div class="prop yarn">🧶</div>
+      <div class="prop wash"><span>✨</span></div>
+    </div>
+
+    <div class="status" id="status">Hjemme</div>
+    <div class="timer"><b id="dur">–</b><small id="since"></small></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="v green" id="homeStat">–</div><div class="l">hjemme i dag</div></div>
+    <div class="stat"><div class="v red" id="outStat">–</div><div class="l">ude i dag</div></div>
+    <div class="stat"><div class="v" id="tripStat">–</div><div class="l">ture ud</div></div>
+  </div>
+
+  <div class="graph-card">
+    <div class="graph-head">
+      <h3>Døgnet</h3>
+      <div class="legend"><span><i style="background:var(--home)"></i>Hjemme</span><span><i style="background:var(--out)"></i>Ude</span></div>
+    </div>
+    <svg id="skyline" viewBox="0 0 1000 250" preserveAspectRatio="none"></svg>
+  </div>
+
+  <div class="foot">Opdateret <b id="updated">—</b> · Home&nbsp;Assistant</div>
+</div>
+
+<script>
+/* =================== DATA — n8n / HA udfylder KUN dette =================
+   status:      "home" | "out"
+   stateSince:  ISO-tid hvor nuværende status begyndte  (driver live-tælleren)
+   updated:     ISO-tid for sidste opdatering
+   *HoursToday: decimaltimer
+   tripsToday:  antal ture ud i dag
+   activity.labels[] : tidspunkter ("06.00")  — jævnt fordelt over døgnet
+   activity.states[] : 0 = hjemme, 1 = ude
+   ====================================================================== */
+const FALLBACK = {
+  status: "home",
+  stateSince: "2026-06-25T07:49:00",
+  updated: "2026-06-25T10:23:00",
+  homeHoursToday: 14.85,
+  outHoursToday: 9.15,
+  tripsToday: 4,
+  activity: {
+    labels: ["00","02","04","06","08","10","12","14","16","18","20","22","24"],
+    states: [0,   0,   1,   0,   0,   0,   1,   1,   0,   1,   0,   0,   0]
+  }
+};
+/* ============================ slut DATA ============================ */
+
+let TIMERS = [];
+function clearTimers(){ TIMERS.forEach(clearInterval); TIMERS = []; }
+
+function render(DATA){
+clearTimers();
+const home = DATA.status === "home";
+document.body.classList.toggle("out", !home);
+document.body.classList.toggle("home", home);
+
+const M = ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"];
+const p = n => String(n).padStart(2,"0");
+const clock = d => p(d.getHours())+"."+p(d.getMinutes());
+function fmtH(h){const H=Math.max(0,Math.floor(h)),Mn=Math.round((h-H)*60);return H+"t "+Mn+"m";}
+
+document.getElementById("status").textContent = home ? "Hjemme" : "Ude";
+document.getElementById("homeStat").textContent = fmtH(DATA.homeHoursToday);
+document.getElementById("outStat").textContent = fmtH(DATA.outHoursToday);
+document.getElementById("tripStat").textContent = DATA.tripsToday;
+
+const since = new Date(DATA.stateSince);
+document.getElementById("since").textContent = "siden kl. " + clock(since);
+const upd = new Date(DATA.updated);
+document.getElementById("updated").textContent = p(upd.getDate())+". "+M[upd.getMonth()]+". kl. "+clock(upd);
+
+/* live varigheds-tæller */
+function tick(){
+  let s = Math.max(0, Math.floor((Date.now()-since.getTime())/1000));
+  const h=Math.floor(s/3600); s%=3600; const m=Math.floor(s/60); const sec=s%60;
+  document.getElementById("dur").textContent = (home?"Hjemme i ":"Ude i ") + (h?h+"t ":"") + m+"m " + p(sec)+"s";
+}
+tick(); TIMERS.push(setInterval(tick,1000));
+
+/* jagt-animation: kun når Bølle er ude — han jager en mus hvert 10. sekund */
+if(!home){
+  const chase = () => {
+    document.body.classList.add("chasing");
+    setTimeout(() => document.body.classList.remove("chasing"), 2300);
+  };
+  setTimeout(chase, 1800);
+  TIMERS.push(setInterval(chase, 10000));
+}
+
+/* hjemme-animation: Bølle sover / spiser / kæler — skifter hvert 9. sekund */
+if(home){
+  const acts = ["sleep","eat","cuddle"];
+  let i = 0;
+  const doAct = () => {
+    const a = acts[i % acts.length]; i++;
+    if(a === "sleep"){
+      document.body.style.setProperty("--sleepTilt", (Math.random()<.5?"-":"") + (3 + Math.round(Math.random()*4)) + "deg");
+    }
+    document.body.classList.add("act-" + a);
+    setTimeout(() => document.body.classList.remove("act-" + a), 3600);
+  };
+  setTimeout(doAct, 1500);
+  TIMERS.push(setInterval(doAct, 9000));
+}
+
+/* ============ bespoke døgn-skyline (ren SVG) ============ */
+(function(){
+  const L=DATA.activity.labels, S=DATA.activity.states, n=L.length;
+  const W=1000,H=250, padL=14,padR=14, bottom=196, homeY=150, outY=58;
+  const x = i => padL + (W-padL-padR)*(i/(n-1));
+  const svg=document.getElementById("skyline");
+  let defs=`<defs>
+    <linearGradient id="gH" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--home)" stop-opacity=".55"/><stop offset="1" stop-color="var(--home)" stop-opacity=".05"/></linearGradient>
+    <linearGradient id="gO" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--out)" stop-opacity=".6"/><stop offset="1" stop-color="var(--out)" stop-opacity=".05"/></linearGradient>
+    <filter id="gl" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>`;
+  let grid="";
+  for(let i=0;i<n;i+=2){ grid+=`<line x1="${x(i)}" y1="40" x2="${x(i)}" y2="${bottom}" stroke="var(--line)"/>`; }
+  grid+=`<line x1="${padL}" y1="${bottom}" x2="${W-padR}" y2="${bottom}" stroke="var(--line)"/>`;
+  // merge runs
+  let blocks="",caps="",i=0;
+  while(i<n-1){
+    let j=i; const s=S[i];
+    while(j+1<n-1 && S[j+1]===s) j++;
+    const x1=x(i), x2=x(j+1), y=s?outY:homeY, r=9, g=s?"gO":"gH", col=s?"var(--out)":"var(--home)";
+    blocks+=`<path d="M${x1} ${bottom} L${x1} ${y+r} Q${x1} ${y} ${x1+r} ${y} L${x2-r} ${y} Q${x2} ${y} ${x2} ${y+r} L${x2} ${bottom} Z" fill="url(#${g})"/>`;
+    caps+=`<line x1="${x1+r}" y1="${y}" x2="${x2-r}" y2="${y}" stroke="${col}" stroke-width="3.5" stroke-linecap="round" filter="url(#gl)"/>`;
+    i=j+1;
+  }
+  let labels="";
+  for(let i=0;i<n;i+=2){ labels+=`<text x="${x(i)}" y="${bottom+26}" text-anchor="middle">${L[i]}</text>`; }
+  // NU markør
+  const nx=x(n-1);
+  const nowMark=`<line x1="${nx}" y1="40" x2="${nx}" y2="${bottom}" stroke="#fff" stroke-opacity=".25" stroke-dasharray="3 4"/>
+    <circle cx="${nx}" cy="${(S[n-1]?outY:homeY)}" r="5" fill="#fff"/><text x="${nx-4}" y="34" text-anchor="end" fill="#fff" opacity=".6">NU</text>`;
+  svg.innerHTML = defs+grid+blocks+caps+labels+nowMark;
+})();
+}
+
+/* ====== Bølles egen datafil: en GitHub Gist, som Home Assistant opdaterer
+   ved hvert kattebesøg. Helt uafhængig af den gamle kat.html (som derfor
+   trygt kan slettes). Tjekker hvert 30. sekund og gentegner kun ved ændring,
+   så animationerne ikke nulstilles unødigt. ============================== */
+const DATA_URL = "https://gist.githubusercontent.com/henrikastrup/c63cbd4512ed39547a870f959fe775f9/raw/bolle.json";
+let lastSig = null;
+async function loadData(){
+  try{
+    const r = await fetch(DATA_URL + "?t=" + Date.now(), {cache:"no-store"});
+    if(!r.ok) throw 0;
+    const d = await r.json();
+    const sig = JSON.stringify(d);
+    if(sig !== lastSig){ lastSig = sig; render(Object.assign({}, FALLBACK, d)); }
+  }catch(e){
+    if(!lastSig){ lastSig = "fallback"; render(FALLBACK); }
+  }
+}
+loadData();
+setInterval(loadData, 30000);
+</script>
+</body>
+</html>
