@@ -471,10 +471,8 @@ function render(DATA){
   buildClimate(DATA);
   buildDoors(DATA);
 
-  /* morgenbillede-tidsstempel */
-  const cs=document.getElementById("camStamp");
-  if(DATA.webcamTime){const w=new Date(DATA.webcamTime);cs.textContent="Taget "+p(w.getDate())+". "+M[w.getMonth()]+". kl. "+clock(w);}
-  else cs.textContent="";
+  /* morgenbillede-tekst */
+  document.getElementById("camStamp").textContent="Solopgang ved huset";
 }
 
 /* regndråber / snefnug partikler */
@@ -632,25 +630,18 @@ async function loadData(){
 loadData();
 setInterval(loadData,30000);
 
-/* morgenbillede: hentes som base64 fra samme gist (egen fil webcam.b64).
-   Findes ikke før første morgen-upload -> kortet skjules pænt. */
-const CAM_URL="https://gist.githubusercontent.com/henrikastrup/5c94bc3bb851305bab61db0f9e37b110/raw/webcam.b64";
-let camSig=null;
-async function loadCam(){
-  try{
-    const r=await fetch(CAM_URL+"?t="+Date.now(),{cache:"no-store"});
-    if(!r.ok)throw 0;
-    const b64=(await r.text()).trim();
-    if(b64.length<100)throw 0;
-    if(b64!==camSig){
-      camSig=b64;
-      document.getElementById("camImg").src="data:image/jpeg;base64,"+b64;
-      document.getElementById("camCard").style.display="block";
-    }
-  }catch(e){/* intet billede endnu */}
+/* morgenbillede: dagligt solopgangs-snapshot fra sommerhusets kamera,
+   serveret direkte af Home Assistant (/local kræver ikke login, og et <img>
+   kræver ikke CORS). Opdateres af automation.solopgang_foto_graerup_dagligt. */
+const CAM_URL="https://ha.xmemory.com/local/snapshots/solopgang-vest.jpg";
+function loadCam(){
+  const img=document.getElementById("camImg");
+  img.onload=()=>{document.getElementById("camCard").style.display="block";};
+  img.onerror=()=>{document.getElementById("camCard").style.display="none";};
+  img.src=CAM_URL+"?t="+Date.now();
 }
 loadCam();
-setInterval(loadCam,300000);
+setInterval(loadCam,1800000);
 </script>
 </body>
 </html>
