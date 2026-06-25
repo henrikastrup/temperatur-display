@@ -224,8 +224,15 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
       <!-- sommerhuset -->
       <svg class="house" viewBox="0 0 300 236" xmlns="http://www.w3.org/2000/svg" aria-label="Sommerhus">
         <defs>
-          <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e07457"/><stop offset="1" stop-color="#c14e35"/></linearGradient>
-          <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6877a0"/><stop offset="1" stop-color="#4a5878"/></linearGradient>
+          <pattern id="brick" width="24" height="12" patternUnits="userSpaceOnUse">
+            <rect width="24" height="12" fill="#c9a07e"/>
+            <rect x="1" y="1" width="10" height="4.6" fill="#a8503c"/>
+            <rect x="13" y="1" width="10" height="4.6" fill="#9c4836"/>
+            <rect x="-5" y="6.6" width="10" height="4.6" fill="#9c4836"/>
+            <rect x="7" y="6.6" width="10" height="4.6" fill="#a8503c"/>
+            <rect x="19" y="6.6" width="10" height="4.6" fill="#a8503c"/>
+          </pattern>
+          <linearGradient id="thatch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dcbd7e"/><stop offset="1" stop-color="#b18f54"/></linearGradient>
           <radialGradient id="glow" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#fff1c4"/><stop offset="1" stop-color="#ffc24a"/></radialGradient>
           <linearGradient id="dune" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d8c489"/><stop offset="1" stop-color="#b39a64"/></linearGradient>
         </defs>
@@ -234,7 +241,7 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
         <path d="M0 196 Q80 178 150 190 Q230 202 300 184 L300 236 L0 236 Z" fill="url(#dune)"/>
 
         <!-- chimney smoke -->
-        <g class="smoke"><circle cx="196" cy="74" r="6" fill="#c8d0e8"/><circle cx="196" cy="74" r="6" fill="#c8d0e8"/><circle cx="196" cy="74" r="6" fill="#c8d0e8"/></g>
+        <g class="smoke"><circle cx="179" cy="38" r="5" fill="#c8d0e8"/><circle cx="179" cy="38" r="5" fill="#c8d0e8"/><circle cx="179" cy="38" r="5" fill="#c8d0e8"/></g>
 
         <!-- lille Dannebrog (glad sommerhus-detalje) -->
         <line x1="240" y1="138" x2="240" y2="196" stroke="#d8cbb0" stroke-width="2.5" stroke-linecap="round"/>
@@ -243,37 +250,46 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
         <rect x="248" y="139" width="4" height="19" fill="#fff"/>
         <rect x="240" y="146" width="30" height="4" fill="#fff"/>
 
-        <!-- house body -->
-        <rect x="78" y="108" width="144" height="92" rx="3" fill="url(#wall)"/>
-        <!-- hjørnebrædder + sokkel (cremehvid) -->
-        <rect x="78" y="108" width="8" height="92" fill="#f3e9d8"/>
-        <rect x="214" y="108" width="8" height="92" fill="#f3e9d8"/>
-        <rect x="78" y="193" width="144" height="7" fill="#f3e9d8"/>
-        <!-- chimney -->
-        <rect x="188" y="56" width="16" height="32" rx="2" fill="#c14e35"/>
-        <rect x="186" y="54" width="20" height="7" rx="2" fill="#f3e9d8"/>
-        <!-- roof -->
-        <path d="M62 114 L150 54 L238 114 Z" fill="url(#roof)"/>
-        <path d="M62 114 L150 54 L238 114" fill="none" stroke="#e9eefb" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- murstensvægge -->
+        <rect x="78" y="120" width="144" height="80" fill="url(#brick)"/>
+        <!-- sort sokkel (træværk) -->
+        <rect x="78" y="194" width="144" height="6" fill="#1d1d22"/>
+
+        <!-- muret skorsten (bag stråtaget) -->
+        <rect x="172" y="40" width="15" height="36" fill="url(#brick)"/>
+        <rect x="169" y="37" width="21" height="6" rx="1" fill="#1d1d22"/>
+
+        <!-- stråtag -->
+        <path d="M150 46 L56 116 Q51 124 61 126 L239 126 Q249 124 244 116 Z" fill="url(#thatch)"/>
+        <path d="M61 120 L239 120 L239 126 L61 126 Z" fill="#9c7c46" opacity=".7"/>
+        <g stroke="#977740" stroke-width="1.2" opacity=".35" stroke-linecap="round">
+          <line x1="150" y1="56" x2="74" y2="118"/><line x1="150" y1="56" x2="92" y2="118"/>
+          <line x1="150" y1="56" x2="111" y2="118"/><line x1="150" y1="56" x2="130" y2="118"/>
+          <line x1="150" y1="56" x2="150" y2="118"/><line x1="150" y1="56" x2="170" y2="118"/>
+          <line x1="150" y1="56" x2="189" y2="118"/><line x1="150" y1="56" x2="208" y2="118"/>
+          <line x1="150" y1="56" x2="226" y2="118"/>
+        </g>
+        <!-- mønning (ryg) -->
+        <path d="M150 46 L137 60 L163 60 Z" fill="#8a6c39"/>
 
         <!-- window with warm light + hvid ramme -->
         <rect x="150" y="128" width="50" height="46" rx="2" fill="url(#glow)" class="win win-on"/>
-        <g stroke="#fff" stroke-width="3"><line x1="175" y1="128" x2="175" y2="174"/><line x1="150" y1="151" x2="200" y2="151"/></g>
-        <rect x="146" y="124" width="58" height="54" rx="3" fill="none" stroke="#f7efe0" stroke-width="4"/>
+        <g stroke="#1d1d22" stroke-width="3"><line x1="175" y1="128" x2="175" y2="174"/><line x1="150" y1="151" x2="200" y2="151"/></g>
+        <rect x="146" y="124" width="58" height="54" rx="2" fill="none" stroke="#1d1d22" stroke-width="4"/>
         <!-- blomsterkasse under vinduet -->
-        <rect x="144" y="178" width="62" height="9" rx="2" fill="#7a5230"/>
+        <rect x="144" y="178" width="62" height="9" rx="2" fill="#2a2118"/>
         <circle cx="156" cy="177" r="3.2" fill="#ffd24a"/>
         <circle cx="168" cy="176" r="3.2" fill="#ff6f91"/>
         <circle cx="180" cy="177" r="3.2" fill="#fff"/>
         <circle cx="192" cy="176" r="3.2" fill="#ff6f91"/>
 
-        <!-- doorway: light behind, then swinging blue door -->
+        <!-- doorway: light behind, then swinging sort dør -->
         <rect x="100" y="138" width="34" height="62" rx="2" fill="url(#glow)" class="doorlight"/>
         <g class="doorGroup">
-          <rect x="100" y="138" width="34" height="62" rx="2" fill="#5b86b0"/>
-          <rect x="105" y="144" width="24" height="22" rx="2" fill="none" stroke="#cfe0f0" stroke-width="2"/>
-          <rect x="105" y="170" width="24" height="24" rx="2" fill="none" stroke="#cfe0f0" stroke-width="2"/>
-          <rect x="100" y="138" width="34" height="62" rx="2" fill="none" stroke="#f7efe0" stroke-width="3"/>
+          <rect x="100" y="138" width="34" height="62" rx="2" fill="#232329"/>
+          <rect x="105" y="144" width="24" height="22" rx="1.5" fill="none" stroke="#3c3c45" stroke-width="2"/>
+          <rect x="105" y="170" width="24" height="24" rx="1.5" fill="none" stroke="#3c3c45" stroke-width="2"/>
+          <rect x="100" y="138" width="34" height="62" rx="2" fill="none" stroke="#15151a" stroke-width="3"/>
           <circle cx="127" cy="170" r="2.6" fill="#ffd24a"/>
         </g>
 
