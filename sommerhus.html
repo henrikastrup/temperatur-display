@@ -175,6 +175,20 @@ svg.chart{width:100%;height:auto;display:block}
 svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
 .empty{color:var(--faint);font-size:.84rem;text-align:center;padding:26px 0}
 
+.wind-body{display:flex;align-items:center;gap:18px;padding:6px 6px 2px}
+#windDial{flex:0 0 auto;line-height:0}
+.wind-meta{flex:1}
+.wind-big{font-size:2.2rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1}
+.wind-big small{font-size:.9rem;color:var(--muted);font-weight:400}
+.wind-sub{margin-top:7px;color:var(--muted);font-size:.86rem;line-height:1.4}
+.cal-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:14px;margin-bottom:7px;background:rgba(255,255,255,.025);border:1px solid transparent}
+.cal-row:last-child{margin-bottom:0}
+.cal-row.now{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.cal-left{display:flex;align-items:baseline;gap:9px}
+.cal-wk{font-size:1.15rem;font-weight:600}
+.cal-yr{font-size:.8rem;color:var(--faint)}
+.cal-now-tag{font-size:.64rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-left:2px}
+.who-badge{padding:4px 14px;border-radius:999px;font-size:.85rem;font-weight:600}
 .cam-card{margin-top:18px;padding:16px 16px 14px;border:1px solid var(--line);border-radius:24px;
   background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.012));display:none}
 .cam-frame{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#0a0c16}
@@ -344,6 +358,22 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
     <div class="fcrow" id="fcrow"></div>
   </div>
 
+  <div class="fcwrap">
+    <div class="fchead"><h3>Vind lige nu</h3><div class="fcnow" id="windRead"></div></div>
+    <div class="wind-body">
+      <div id="windDial"></div>
+      <div class="wind-meta">
+        <div class="wind-big"><span id="windSpeed">–</span> <small>km/t</small></div>
+        <div class="wind-sub" id="windSub"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fcwrap">
+    <div class="fchead"><h3>Hvem har huset</h3><div class="fcnow">6 uger frem</div></div>
+    <div id="calRows"></div>
+  </div>
+
   <div class="graph-card">
     <div class="graph-head">
       <h3>Temperatur &amp; fugt · i dag</h3>
@@ -378,7 +408,8 @@ const FALLBACK = {
   door:"unknown", doorSince:"2026-06-20T13:00:00+02:00", doorLastOpen:null, doorOpensToday:0,
   webcamTime:null,
   tempSeries:[], humSeries:[], doorTimes:[], weekDoor:[0,0,0,0,0,0,0],
-  weather:{now:"sunny",tempOut:19.6,humidityOut:74,wind:20.5,forecast:[
+  weeks:[{week:26,year:2026,who:"Henrik"},{week:27,year:2026,who:"Henrik"},{week:28,year:2026,who:"Hanne"},{week:29,year:2026,who:"Hanne"},{week:30,year:2026,who:"Birgit"},{week:31,year:2026,who:"Birgit"}],
+  weather:{now:"sunny",tempOut:19.6,humidityOut:74,wind:20.5,windDir:320,windGust:33,forecast:[
     {day:"tor",cond:"sunny",hi:20,lo:17,pop:0},{day:"fre",cond:"sunny",hi:32,lo:13,pop:0},
     {day:"lør",cond:"sunny",hi:26,lo:22,pop:18},{day:"søn",cond:"partlycloudy",hi:24,lo:21,pop:72},
     {day:"man",cond:"sunny",hi:21,lo:18,pop:14}]}
@@ -502,6 +533,8 @@ function render(DATA){
 
   buildFx(scene);
   buildForecast(DATA.weather);
+  buildWind(DATA.weather);
+  buildWeeks(DATA.weeks);
   buildClimate(DATA);
   buildDoors(DATA);
 
@@ -544,6 +577,47 @@ function buildForecast(w){
       '<div class="lo">'+num(f.lo,0)+'°</div>'+
       (f.pop>10?'<div class="pop">'+f.pop+'%</div>':'<div class="pop">&nbsp;</div>');
     row.appendChild(el);
+  });
+}
+
+/* vind-kompas */
+function buildWind(w){
+  w=w||{};
+  const dir=w.windDir, spd=w.wind, gust=w.windGust;
+  const pts=["N","NØ","Ø","SØ","S","SV","V","NV"];
+  const name=(dir==null)?"–":pts[Math.round(dir/45)%8];
+  document.getElementById("windSpeed").textContent=(spd==null)?"–":Math.round(spd);
+  document.getElementById("windRead").innerHTML=(dir==null)?"":('fra <b>'+name+'</b>');
+  document.getElementById("windSub").innerHTML=
+    ((dir==null)?"":("kommer fra "+name+" ("+Math.round(dir)+"°)"))+
+    ((gust!=null)?("<br>vindstød "+Math.round(gust)+" km/t"):"");
+  const dial='<svg width="108" height="108" viewBox="0 0 120 120" aria-hidden="true">'+
+    '<circle cx="60" cy="60" r="52" fill="rgba(255,255,255,.03)" stroke="var(--line)"/>'+
+    '<circle cx="60" cy="60" r="52" fill="none" stroke="var(--accent-soft)" stroke-width="2"/>'+
+    '<g fill="var(--faint)" font-family="Space Grotesk,sans-serif" font-size="12" text-anchor="middle">'+
+    '<text x="60" y="21">N</text><text x="103" y="64">Ø</text><text x="60" y="106">S</text><text x="17" y="64">V</text></g>'+
+    ((dir==null)?'':('<g transform="rotate('+dir+' 60 60)">'+
+      '<line x1="60" y1="60" x2="60" y2="78" stroke="var(--faint)" stroke-width="3" stroke-linecap="round"/>'+
+      '<line x1="60" y1="60" x2="60" y2="26" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>'+
+      '<path d="M60 18 L53 33 L67 33 Z" fill="var(--accent)"/>'+
+      '<circle cx="60" cy="60" r="5" fill="var(--accent)"/></g>'))+
+    '</svg>';
+  document.getElementById("windDial").innerHTML=dial;
+}
+
+/* booking-kalender: hvem har huset (uge + år) */
+function buildWeeks(weeks){
+  const colors={Henrik:["#ff9d3c","#3a2602"],Hanne:["#49b6ff","#06243a"],Birgit:["#ff6f91","#3a0c1a"]};
+  const rows=document.getElementById("calRows");rows.innerHTML="";
+  (weeks||[]).forEach((w,i)=>{
+    const who=w.who||"Ledig";
+    const c=colors[who]||["#5dcaa5","#04342c"];
+    const el=document.createElement("div");
+    el.className="cal-row"+(i===0?" now":"");
+    el.innerHTML='<div class="cal-left"><span class="cal-wk">Uge '+w.week+'</span><span class="cal-yr">'+w.year+'</span>'+
+      (i===0?'<span class="cal-now-tag">nu</span>':'')+'</div>'+
+      '<span class="who-badge" style="background:'+c[0]+';color:'+c[1]+'">'+who+'</span>';
+    rows.appendChild(el);
   });
 }
 
