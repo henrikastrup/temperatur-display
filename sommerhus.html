@@ -186,8 +186,7 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
 .offbanner{display:none;margin:14px auto 0;max-width:420px;padding:9px 16px;border-radius:14px;
   background:rgba(255,157,60,.1);border:1px solid rgba(255,157,60,.3);color:#ffce8f;font-size:.82rem}
 .offline .offbanner{display:block}
-.offline .house{filter:drop-shadow(0 14px 22px rgba(0,0,0,.45)) grayscale(.55) brightness(.7)}
-.offline .win{opacity:.3}
+.offline .win{opacity:.5}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
@@ -225,10 +224,10 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
       <!-- sommerhuset -->
       <svg class="house" viewBox="0 0 300 236" xmlns="http://www.w3.org/2000/svg" aria-label="Sommerhus">
         <defs>
-          <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b4668"/><stop offset="1" stop-color="#2a3350"/></linearGradient>
-          <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b4a5e"/><stop offset="1" stop-color="#4a3344"/></linearGradient>
-          <radialGradient id="glow" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#ffe9b0"/><stop offset="1" stop-color="#f4b24c"/></radialGradient>
-          <linearGradient id="dune" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d2740"/><stop offset="1" stop-color="#10182b"/></linearGradient>
+          <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e07457"/><stop offset="1" stop-color="#c14e35"/></linearGradient>
+          <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6877a0"/><stop offset="1" stop-color="#4a5878"/></linearGradient>
+          <radialGradient id="glow" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#fff1c4"/><stop offset="1" stop-color="#ffc24a"/></radialGradient>
+          <linearGradient id="dune" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d8c489"/><stop offset="1" stop-color="#b39a64"/></linearGradient>
         </defs>
 
         <!-- dune ground -->
@@ -237,30 +236,49 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
         <!-- chimney smoke -->
         <g class="smoke"><circle cx="196" cy="74" r="6" fill="#c8d0e8"/><circle cx="196" cy="74" r="6" fill="#c8d0e8"/><circle cx="196" cy="74" r="6" fill="#c8d0e8"/></g>
 
+        <!-- lille Dannebrog (glad sommerhus-detalje) -->
+        <line x1="240" y1="138" x2="240" y2="196" stroke="#d8cbb0" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="240" cy="137" r="2.6" fill="#f3e9d8"/>
+        <rect x="240" y="139" width="30" height="19" fill="#c8102e"/>
+        <rect x="248" y="139" width="4" height="19" fill="#fff"/>
+        <rect x="240" y="146" width="30" height="4" fill="#fff"/>
+
         <!-- house body -->
         <rect x="78" y="108" width="144" height="92" rx="3" fill="url(#wall)"/>
+        <!-- hjørnebrædder + sokkel (cremehvid) -->
+        <rect x="78" y="108" width="8" height="92" fill="#f3e9d8"/>
+        <rect x="214" y="108" width="8" height="92" fill="#f3e9d8"/>
+        <rect x="78" y="193" width="144" height="7" fill="#f3e9d8"/>
         <!-- chimney -->
-        <rect x="188" y="58" width="16" height="30" rx="2" fill="#4a3344"/>
+        <rect x="188" y="56" width="16" height="32" rx="2" fill="#c14e35"/>
+        <rect x="186" y="54" width="20" height="7" rx="2" fill="#f3e9d8"/>
         <!-- roof -->
-        <path d="M66 112 L150 56 L234 112 Z" fill="url(#roof)"/>
-        <path d="M66 112 L150 56 L234 112" fill="none" stroke="#7d5870" stroke-width="2" stroke-linecap="round"/>
+        <path d="M62 114 L150 54 L238 114 Z" fill="url(#roof)"/>
+        <path d="M62 114 L150 54 L238 114" fill="none" stroke="#e9eefb" stroke-width="2.5" stroke-linejoin="round"/>
 
-        <!-- window with warm light -->
-        <rect x="150" y="128" width="50" height="46" rx="3" fill="url(#glow)" class="win win-on"/>
-        <g stroke="#2a3350" stroke-width="3"><line x1="175" y1="128" x2="175" y2="174"/><line x1="150" y1="151" x2="200" y2="151"/></g>
-        <rect x="146" y="124" width="58" height="54" rx="4" fill="none" stroke="#202942" stroke-width="3"/>
+        <!-- window with warm light + hvid ramme -->
+        <rect x="150" y="128" width="50" height="46" rx="2" fill="url(#glow)" class="win win-on"/>
+        <g stroke="#fff" stroke-width="3"><line x1="175" y1="128" x2="175" y2="174"/><line x1="150" y1="151" x2="200" y2="151"/></g>
+        <rect x="146" y="124" width="58" height="54" rx="3" fill="none" stroke="#f7efe0" stroke-width="4"/>
+        <!-- blomsterkasse under vinduet -->
+        <rect x="144" y="178" width="62" height="9" rx="2" fill="#7a5230"/>
+        <circle cx="156" cy="177" r="3.2" fill="#ffd24a"/>
+        <circle cx="168" cy="176" r="3.2" fill="#ff6f91"/>
+        <circle cx="180" cy="177" r="3.2" fill="#fff"/>
+        <circle cx="192" cy="176" r="3.2" fill="#ff6f91"/>
 
-        <!-- doorway: light behind, then swinging door -->
+        <!-- doorway: light behind, then swinging blue door -->
         <rect x="100" y="138" width="34" height="62" rx="2" fill="url(#glow)" class="doorlight"/>
         <g class="doorGroup">
-          <rect x="100" y="138" width="34" height="62" rx="2" fill="#222b45"/>
-          <rect x="100" y="138" width="34" height="62" rx="2" fill="none" stroke="#3a4668" stroke-width="2"/>
-          <rect x="100" y="138" width="34" height="62" rx="2" fill="none" stroke="#161d31" stroke-width="2"/>
-          <circle cx="128" cy="170" r="2.4" fill="var(--win)"/>
+          <rect x="100" y="138" width="34" height="62" rx="2" fill="#5b86b0"/>
+          <rect x="105" y="144" width="24" height="22" rx="2" fill="none" stroke="#cfe0f0" stroke-width="2"/>
+          <rect x="105" y="170" width="24" height="24" rx="2" fill="none" stroke="#cfe0f0" stroke-width="2"/>
+          <rect x="100" y="138" width="34" height="62" rx="2" fill="none" stroke="#f7efe0" stroke-width="3"/>
+          <circle cx="127" cy="170" r="2.6" fill="#ffd24a"/>
         </g>
 
         <!-- marram grass -->
-        <g stroke="#5b6b54" stroke-width="2.4" stroke-linecap="round" fill="none">
+        <g stroke="#86a85a" stroke-width="2.4" stroke-linecap="round" fill="none">
           <path class="grass"    d="M40 198 Q42 182 38 172"/>
           <path class="grass g2" d="M46 198 Q50 184 54 174"/>
           <path class="grass g3" d="M52 199 Q53 186 49 178"/>
