@@ -225,6 +225,37 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
 .trash-card-rel.today{color:#fff;background:#3f6b52}
 .trash-card-chevron{flex:0 0 auto;color:var(--faint);font-size:1.4rem;line-height:1}
 
+/* generiske info-kort (vejledninger/tjeklister) */
+.info-card{margin-top:10px;display:flex;align-items:center;gap:14px;cursor:pointer;
+  padding:14px 16px;border-radius:20px;border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+  transition:border-color .2s,background .2s}
+.info-card.blue{--ic:#49b6ff}
+.info-card.amber{--ic:#ffd24a}
+.info-card:hover,.info-card:focus-visible{border-color:color-mix(in srgb,var(--ic) 55%,transparent)}
+.info-card-icon{flex:0 0 auto;width:42px;height:42px;border-radius:13px;display:flex;align-items:center;
+  justify-content:center;background:color-mix(in srgb,var(--ic) 18%,transparent);color:var(--ic)}
+.info-card-icon svg{width:22px;height:22px}
+.info-card-text{flex:1;min-width:0}
+.info-card-label{font-size:1.02rem;font-weight:600;color:#fff}
+.info-card-sub{font-size:.78rem;color:var(--faint);margin-top:2px}
+.info-card-chevron{flex:0 0 auto;color:var(--faint);font-size:1.4rem;line-height:1}
+
+/* accordion i vejledninger/tjeklister-modaler */
+.acc-item{border-bottom:1px solid var(--line)}
+.acc-item:last-child{border-bottom:none}
+.acc-head{width:100%;display:flex;align-items:center;justify-content:space-between;background:none;
+  border:none;color:var(--txt);font-family:inherit;font-size:.92rem;font-weight:600;padding:12px 2px;
+  cursor:pointer;text-align:left}
+.acc-arrow{color:var(--faint);transition:transform .2s;font-size:1.2rem;flex:0 0 auto}
+.acc-item.open .acc-arrow{transform:rotate(90deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.acc-item.open .acc-body{max-height:1200px}
+.acc-body p,.acc-body li{font-size:.86rem;color:var(--muted);line-height:1.5;margin:0 0 8px}
+.acc-body h4{font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:12px 0 6px}
+.acc-body ul{padding-left:18px;margin:0 0 8px}
+.acc-body b{color:var(--txt)}
+
 .modal-backdrop{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;
   padding:20px;background:rgba(4,5,11,.72);backdrop-filter:blur(3px)}
 .modal-backdrop.show{display:flex}
@@ -400,6 +431,30 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
     <div class="trash-card-chevron">&rsaquo;</div>
   </div>
 
+  <div class="info-card blue" id="guideCard" role="button" tabindex="0" aria-label="Se vejledninger til huset"
+       onclick="openModal('guideModal')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('guideModal')}">
+    <div class="info-card-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955a1.125 1.125 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
+    </div>
+    <div class="info-card-text">
+      <div class="info-card-label">Vejledninger</div>
+      <div class="info-card-sub">Varmepumpe, wifi, nøgler, overvågning m.m.</div>
+    </div>
+    <div class="info-card-chevron">&rsaquo;</div>
+  </div>
+
+  <div class="info-card amber" id="checklistCard" role="button" tabindex="0" aria-label="Se tjeklister"
+       onclick="openModal('checklistModal')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('checklistModal')}">
+    <div class="info-card-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+    </div>
+    <div class="info-card-text">
+      <div class="info-card-label">Tjeklister</div>
+      <div class="info-card-sub">Ved ankomst og afrejse</div>
+    </div>
+    <div class="info-card-chevron">&rsaquo;</div>
+  </div>
+
   <div class="cam-card" id="camCard">
     <div class="graph-head">
       <h3>Morgenbillede fra huset</h3>
@@ -468,6 +523,26 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
     </div>
     <div class="modal-sub">Torsdage, hentes ved vejen</div>
     <div id="trashList"></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="guideModal" onclick="if(event.target===this)closeModal('guideModal')">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Vejledninger til huset</h3>
+      <button class="modal-close" onclick="closeModal('guideModal')" aria-label="Luk">&times;</button>
+    </div>
+    <div id="guideAccordion"></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="checklistModal" onclick="if(event.target===this)closeModal('checklistModal')">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Tjeklister</h3>
+      <button class="modal-close" onclick="closeModal('checklistModal')" aria-label="Luk">&times;</button>
+    </div>
+    <div id="checklistAccordion"></div>
   </div>
 </div>
 
@@ -877,9 +952,117 @@ async function loadTrash(){
 }
 function openTrashModal(){document.getElementById("trashModal").classList.add("show");}
 function closeTrashModal(){document.getElementById("trashModal").classList.remove("show");}
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeTrashModal();});
+function openModal(id){document.getElementById(id).classList.add("show");}
+function closeModal(id){document.getElementById(id).classList.remove("show");}
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape")document.querySelectorAll(".modal-backdrop.show").forEach(m=>m.classList.remove("show"));
+});
 loadTrash();
 setInterval(loadTrash,3600000);
+
+/* ====== vejledninger & tjeklister — hentet fra github.com/henrikastrup/sommerhus
+   (services/contentService.ts), Henrik redigerer der hvis teksten skal ændres. ====== */
+function inlineMd(s){return s.replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");}
+function mdToHtml(md){
+  const lines=md.trim().split("\n").map(l=>l.trim()).filter(l=>l.length);
+  let html="",inList=false;
+  for(const line of lines){
+    if(line.startsWith("### ")){
+      if(inList){html+="</ul>";inList=false;}
+      html+="<h4>"+inlineMd(line.slice(4))+"</h4>";
+    }else if(line.startsWith("- ")){
+      if(!inList){html+="<ul>";inList=true;}
+      html+="<li>"+inlineMd(line.slice(2))+"</li>";
+    }else{
+      if(inList){html+="</ul>";inList=false;}
+      html+="<p>"+inlineMd(line)+"</p>";
+    }
+  }
+  if(inList)html+="</ul>";
+  return html;
+}
+function renderAccordion(containerId,topics){
+  const c=document.getElementById(containerId);c.innerHTML="";
+  topics.forEach(t=>{
+    const item=document.createElement("div");item.className="acc-item";
+    item.innerHTML='<button class="acc-head" onclick="this.parentElement.classList.toggle(\'open\')">'+
+      "<span>"+t.title+'</span><span class="acc-arrow">&rsaquo;</span></button>'+
+      '<div class="acc-body">'+mdToHtml(t.md)+"</div>";
+    c.appendChild(item);
+  });
+}
+const GUIDE_TOPICS=[
+  {title:"Varmepumpe",md:`
+### Betjening
+- Tænd for varmepumpen med fjernbetjeningen som hænger på væggen.
+- Indstil temperatur op og ned med fjernbetjeningen.
+- **Meget vigtigt**: Varmepumpen skal stå på mode **"Heat"**. Alle andre programmer, også det program som hedder "Auto", er i forskellig grad køleprogrammer. Hvis andre programmer end Heat vælges, fungerer varmepumpen ikke optimalt.
+- Man kan med fjernbetjeningen vælge at styre luftstrømmen i forskellige retninger hvis dette ønskes.
+
+### Fjernstyring
+Henrik kan tænde for varmepumpen via internettet inden ankomst, hvis varmepumpe og internet er tændt i huset.
+`},
+  {title:"Internet & Wi-Fi",md:`
+### Wi-Fi adgang
+Koden er de 8 cifre i mormor/farmors telefonnummer.
+
+### Router og forbrug
+Internetrouteren står på repos i loftsrummet. Der er begrænsning på 1000 GB data hver måned, så undgå at downloade store mængder data.
+`},
+  {title:"Overvågning",md:`
+Der ligger en temperaturmåler i badeværelset og sidder en dørsensor i hoveddøren for at overvåge huset via internettet mod indbrud og frostskader.
+
+På loftsværelset står et kamera som overvåger indkørslen.
+`},
+  {title:"Nøgler",md:`
+Der er et sæt nøgler til skuret samt et sæt til terrassedøren, som hænger over kaffemaskinen. For at låse døren til skuret hives op i håndtaget mens nøglen drejes.
+`},
+  {title:"Forbrug",md:`
+- Medbring selv toiletpapir og køkkenruller.
+- Hvis du bruger det sidste af øvrige forbrugsvarer, købes nyt, så det ikke mangler for den næste beboer. Forbrug af strøm afregnes årligt jf. den lille sorte bog.
+- Hvis du efterlader mel, sukker m.m. pakkes det ind i plasticpose, så der ikke går dyr i det.
+`},
+  {title:"TV",md:`
+Vejledning kommer snart…
+`},
+  {title:"Ovn",md:`
+Vejledning kommer snart…
+`}
+];
+const CHECKLIST_TOPICS=[
+  {title:"Tjekliste ved ankomst",md:`
+- Tænd for vandet i målerbrønden ved postkassen i indkørslen.
+- Tænd for strømmen på sikringsboksen.
+- Skriv navn, dato for ankomst og målerstand fra elmåler i den lille sorte bog, som ligger på sikringsboksen. Ved afrejse tilføjes det nye målertal fra elmåleren i bogen.
+`},
+  {title:"Tjekliste ved afrejse",md:`
+### Rengøring ved afrejse
+- Alle værelser som har været brugt/beboet støvsuges og gulvet vaskes.
+- I køkkenet rengøres køkkenvask, ovn og køleskab, borde tørres af og skuffer og hylder ryddes op så det fremstår pænt. Tag ikke brugte madvarer med hjem eller pak dem ind så der ikke går dyr i det.
+- Rengør mikroovnen, hvis du har brugt den.
+- Når der slukkes for strømmen, skal låget/lågen være lidt åben på køleskab, opvaskemaskine, vaskemaskine og fryser, kaffemaskine og vandkoger.
+- Vær opmærksom på om der ligger brød og krummer i brødbakker og skabe.
+- Badeværelse: Toilet rengøres med børste og toiletrens. Spejlet pudses, håndvask m.m. afkalkes. Gulvet støvsuges og vaskes. Spjældet i væggen skal stå på klem når huset forlades om sommeren. Hvis der er varme på huset når det forlades skal spjældet lukkes.
+- I stuen støvsuges både gulvet og stole/sofaer. Hvis brændeovnen er kold (ikke har været brugt i det senest døgn) tømmes den for aske. Bordene aftørres og ryd op, så alting fremstår pænt. Gulvet vaskes og der lægges brænde i kurven så det er klart til næste beboer.
+- Udendørs: Ryd havemøbler og skur op så det fremstår ryddeligt og pænt, gerne pænere end ved ankomst. Om vinteren sættes havemøblerne på terrassen beskyttet for vind og vejr.
+
+### Afslutning
+- Skriv strømforbrug i den lille sorte bog, som ligger på sikringsboksen.
+- Sluk for alle sikringsgrupper undtagen sikringsgruppe Lys 1 (på denne måde bevares strøm til WiFi og varmepumpe).
+- Luk for vandet i målerbrønden ved postkassen.
+- Tjek at dørene samt døren til skuret er låst.
+
+### Afrejse om vinteren, ved frostsikring
+- Sikringsgruppen med elvarme i sikringsboksen skal som den eneste være tændt.
+- Sæt radiatoren i badeværelset på 5 grader. Efterlad døren fra badeværelset til gang åben.
+- I stuen sættes radiatorer på minimum eller frostsikring.
+- På værelserne skal varmen være slukket og dørene til værelserne skal være lukkede.
+- Luk luftspjældet i brusenichen.
+- Sæt varmepumpen på "sommerhusindstilling" 8 - 15 grader.
+`}
+];
+renderAccordion("guideAccordion",GUIDE_TOPICS);
+renderAccordion("checklistAccordion",CHECKLIST_TOPICS);
 </script>
 </body>
 </html>
