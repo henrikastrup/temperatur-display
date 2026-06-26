@@ -547,6 +547,105 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
 </div>
 
 <script>
+/* ════════════════════════════════════════════════════════════════════════
+   ▶▶▶ REDIGÉR HER ◀◀◀  —  Vejledninger og tjeklister til huset
+   ════════════════════════════════════════════════════════════════════════
+   Dette er det ENESTE sted i hele filen, du behøver røre for at opdatere
+   teksten om varmepumpe, wifi, nøgler, forbrug, TV, ovn, eller tjeklisterne
+   til ankomst/afrejse. Resten af filen (nedenfor) er programkode/design —
+   spring den over, hvis du "kun" vil ændre tekst.
+
+   Sådan redigerer du på github.com:
+   1. Gå til github.com/henrikastrup/temperatur-display
+   2. Åbn sommerhus.html, klik blyant-ikonet ("Edit this file")
+   3. Find emnet du vil ændre herunder, og ret teksten inde i `` `...` ``
+   4. Commit direkte på main — siden opdaterer automatisk inden for et minut
+
+   Skriveregler i teksten (md = "markdown", meget forsimplet):
+   - "### Overskrift"   →  vises som lille fed overskrift
+   - "- punkt"          →  vises som punkt i en liste
+   - "**fed tekst**"     →  vises med fed skrift
+   - Tom linje           →  ny afsnit
+   Pas på: behold de bagvendte anførselstegn ` foran og efter hver tekst,
+   og behold komma og klammer omkring hvert {title:...} — kun TEKSTEN
+   indeni skal ændres.
+   ════════════════════════════════════════════════════════════════════════ */
+const GUIDE_TOPICS=[
+  {title:"Varmepumpe",md:`
+### Betjening
+- Tænd for varmepumpen med fjernbetjeningen som hænger på væggen.
+- Indstil temperatur op og ned med fjernbetjeningen.
+- **Meget vigtigt**: Varmepumpen skal stå på mode **"Heat"**. Alle andre programmer, også det program som hedder "Auto", er i forskellig grad køleprogrammer. Hvis andre programmer end Heat vælges, fungerer varmepumpen ikke optimalt.
+- Man kan med fjernbetjeningen vælge at styre luftstrømmen i forskellige retninger hvis dette ønskes.
+
+### Fjernstyring
+Henrik kan tænde for varmepumpen via internettet inden ankomst, hvis varmepumpe og internet er tændt i huset.
+`},
+  {title:"Internet & Wi-Fi",md:`
+### Wi-Fi adgang
+Koden er de 8 cifre i mormor/farmors telefonnummer.
+
+### Router og forbrug
+Internetrouteren står på repos i loftsrummet. Der er begrænsning på 1000 GB data hver måned, så undgå at downloade store mængder data.
+`},
+  {title:"Overvågning",md:`
+Der ligger en temperaturmåler i badeværelset og sidder en dørsensor i hoveddøren for at overvåge huset via internettet mod indbrud og frostskader.
+
+På loftsværelset står et kamera som overvåger indkørslen.
+`},
+  {title:"Nøgler",md:`
+Der er et sæt nøgler til skuret samt et sæt til terrassedøren, som hænger over kaffemaskinen. For at låse døren til skuret hives op i håndtaget mens nøglen drejes.
+`},
+  {title:"Forbrug",md:`
+- Medbring selv toiletpapir og køkkenruller.
+- Hvis du bruger det sidste af øvrige forbrugsvarer, købes nyt, så det ikke mangler for den næste beboer. Forbrug af strøm afregnes årligt jf. den lille sorte bog.
+- Hvis du efterlader mel, sukker m.m. pakkes det ind i plasticpose, så der ikke går dyr i det.
+`},
+  {title:"TV",md:`
+Vejledning kommer snart…
+`},
+  {title:"Ovn",md:`
+Vejledning kommer snart…
+`}
+];
+const CHECKLIST_TOPICS=[
+  {title:"Tjekliste ved ankomst",md:`
+- Tænd for vandet i målerbrønden ved postkassen i indkørslen.
+- Tænd for strømmen på sikringsboksen.
+- Skriv navn, dato for ankomst og målerstand fra elmåler i den lille sorte bog, som ligger på sikringsboksen. Ved afrejse tilføjes det nye målertal fra elmåleren i bogen.
+`},
+  {title:"Tjekliste ved afrejse",md:`
+### Rengøring ved afrejse
+- Alle værelser som har været brugt/beboet støvsuges og gulvet vaskes.
+- I køkkenet rengøres køkkenvask, ovn og køleskab, borde tørres af og skuffer og hylder ryddes op så det fremstår pænt. Tag ikke brugte madvarer med hjem eller pak dem ind så der ikke går dyr i det.
+- Rengør mikroovnen, hvis du har brugt den.
+- Når der slukkes for strømmen, skal låget/lågen være lidt åben på køleskab, opvaskemaskine, vaskemaskine og fryser, kaffemaskine og vandkoger.
+- Vær opmærksom på om der ligger brød og krummer i brødbakker og skabe.
+- Badeværelse: Toilet rengøres med børste og toiletrens. Spejlet pudses, håndvask m.m. afkalkes. Gulvet støvsuges og vaskes. Spjældet i væggen skal stå på klem når huset forlades om sommeren. Hvis der er varme på huset når det forlades skal spjældet lukkes.
+- I stuen støvsuges både gulvet og stole/sofaer. Hvis brændeovnen er kold (ikke har været brugt i det senest døgn) tømmes den for aske. Bordene aftørres og ryd op, så alting fremstår pænt. Gulvet vaskes og der lægges brænde i kurven så det er klart til næste beboer.
+- Udendørs: Ryd havemøbler og skur op så det fremstår ryddeligt og pænt, gerne pænere end ved ankomst. Om vinteren sættes havemøblerne på terrassen beskyttet for vind og vejr.
+
+### Afslutning
+- Skriv strømforbrug i den lille sorte bog, som ligger på sikringsboksen.
+- Sluk for alle sikringsgrupper undtagen sikringsgruppe Lys 1 (på denne måde bevares strøm til WiFi og varmepumpe).
+- Luk for vandet i målerbrønden ved postkassen.
+- Tjek at dørene samt døren til skuret er låst.
+
+### Afrejse om vinteren, ved frostsikring
+- Sikringsgruppen med elvarme i sikringsboksen skal som den eneste være tændt.
+- Sæt radiatoren i badeværelset på 5 grader. Efterlad døren fra badeværelset til gang åben.
+- I stuen sættes radiatorer på minimum eller frostsikring.
+- På værelserne skal varmen være slukket og dørene til værelserne skal være lukkede.
+- Luk luftspjældet i brusenichen.
+- Sæt varmepumpen på "sommerhusindstilling" 8 - 15 grader.
+`}
+];
+/* ════════════════════════════════════════════════════════════════════════
+   ▲▲▲ STOP — HER OPHØRER REDIGÉR-ZONEN ▲▲▲
+   Alt herunder er programkode/design for hele dashboardet — ret kun her,
+   hvis du vil ændre layout, farver eller funktionalitet (ikke tekst).
+   ════════════════════════════════════════════════════════════════════════ */
+
 /* =================== DATA — Home Assistant udfylder KUN dette ===========
    Se README i gist'en. online=false => sensorerne svarer ikke (huset offline).
    tempSeries / humSeries : timeprøver, index = klokketime (0..23), null = hul.
@@ -991,76 +1090,6 @@ function renderAccordion(containerId,topics){
     c.appendChild(item);
   });
 }
-const GUIDE_TOPICS=[
-  {title:"Varmepumpe",md:`
-### Betjening
-- Tænd for varmepumpen med fjernbetjeningen som hænger på væggen.
-- Indstil temperatur op og ned med fjernbetjeningen.
-- **Meget vigtigt**: Varmepumpen skal stå på mode **"Heat"**. Alle andre programmer, også det program som hedder "Auto", er i forskellig grad køleprogrammer. Hvis andre programmer end Heat vælges, fungerer varmepumpen ikke optimalt.
-- Man kan med fjernbetjeningen vælge at styre luftstrømmen i forskellige retninger hvis dette ønskes.
-
-### Fjernstyring
-Henrik kan tænde for varmepumpen via internettet inden ankomst, hvis varmepumpe og internet er tændt i huset.
-`},
-  {title:"Internet & Wi-Fi",md:`
-### Wi-Fi adgang
-Koden er de 8 cifre i mormor/farmors telefonnummer.
-
-### Router og forbrug
-Internetrouteren står på repos i loftsrummet. Der er begrænsning på 1000 GB data hver måned, så undgå at downloade store mængder data.
-`},
-  {title:"Overvågning",md:`
-Der ligger en temperaturmåler i badeværelset og sidder en dørsensor i hoveddøren for at overvåge huset via internettet mod indbrud og frostskader.
-
-På loftsværelset står et kamera som overvåger indkørslen.
-`},
-  {title:"Nøgler",md:`
-Der er et sæt nøgler til skuret samt et sæt til terrassedøren, som hænger over kaffemaskinen. For at låse døren til skuret hives op i håndtaget mens nøglen drejes.
-`},
-  {title:"Forbrug",md:`
-- Medbring selv toiletpapir og køkkenruller.
-- Hvis du bruger det sidste af øvrige forbrugsvarer, købes nyt, så det ikke mangler for den næste beboer. Forbrug af strøm afregnes årligt jf. den lille sorte bog.
-- Hvis du efterlader mel, sukker m.m. pakkes det ind i plasticpose, så der ikke går dyr i det.
-`},
-  {title:"TV",md:`
-Vejledning kommer snart…
-`},
-  {title:"Ovn",md:`
-Vejledning kommer snart…
-`}
-];
-const CHECKLIST_TOPICS=[
-  {title:"Tjekliste ved ankomst",md:`
-- Tænd for vandet i målerbrønden ved postkassen i indkørslen.
-- Tænd for strømmen på sikringsboksen.
-- Skriv navn, dato for ankomst og målerstand fra elmåler i den lille sorte bog, som ligger på sikringsboksen. Ved afrejse tilføjes det nye målertal fra elmåleren i bogen.
-`},
-  {title:"Tjekliste ved afrejse",md:`
-### Rengøring ved afrejse
-- Alle værelser som har været brugt/beboet støvsuges og gulvet vaskes.
-- I køkkenet rengøres køkkenvask, ovn og køleskab, borde tørres af og skuffer og hylder ryddes op så det fremstår pænt. Tag ikke brugte madvarer med hjem eller pak dem ind så der ikke går dyr i det.
-- Rengør mikroovnen, hvis du har brugt den.
-- Når der slukkes for strømmen, skal låget/lågen være lidt åben på køleskab, opvaskemaskine, vaskemaskine og fryser, kaffemaskine og vandkoger.
-- Vær opmærksom på om der ligger brød og krummer i brødbakker og skabe.
-- Badeværelse: Toilet rengøres med børste og toiletrens. Spejlet pudses, håndvask m.m. afkalkes. Gulvet støvsuges og vaskes. Spjældet i væggen skal stå på klem når huset forlades om sommeren. Hvis der er varme på huset når det forlades skal spjældet lukkes.
-- I stuen støvsuges både gulvet og stole/sofaer. Hvis brændeovnen er kold (ikke har været brugt i det senest døgn) tømmes den for aske. Bordene aftørres og ryd op, så alting fremstår pænt. Gulvet vaskes og der lægges brænde i kurven så det er klart til næste beboer.
-- Udendørs: Ryd havemøbler og skur op så det fremstår ryddeligt og pænt, gerne pænere end ved ankomst. Om vinteren sættes havemøblerne på terrassen beskyttet for vind og vejr.
-
-### Afslutning
-- Skriv strømforbrug i den lille sorte bog, som ligger på sikringsboksen.
-- Sluk for alle sikringsgrupper undtagen sikringsgruppe Lys 1 (på denne måde bevares strøm til WiFi og varmepumpe).
-- Luk for vandet i målerbrønden ved postkassen.
-- Tjek at dørene samt døren til skuret er låst.
-
-### Afrejse om vinteren, ved frostsikring
-- Sikringsgruppen med elvarme i sikringsboksen skal som den eneste være tændt.
-- Sæt radiatoren i badeværelset på 5 grader. Efterlad døren fra badeværelset til gang åben.
-- I stuen sættes radiatorer på minimum eller frostsikring.
-- På værelserne skal varmen være slukket og dørene til værelserne skal være lukkede.
-- Luk luftspjældet i brusenichen.
-- Sæt varmepumpen på "sommerhusindstilling" 8 - 15 grader.
-`}
-];
 renderAccordion("guideAccordion",GUIDE_TOPICS);
 renderAccordion("checklistAccordion",CHECKLIST_TOPICS);
 </script>
