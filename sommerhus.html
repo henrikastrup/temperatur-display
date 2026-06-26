@@ -202,15 +202,28 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
 .offline .offbanner{display:block}
 .offline .win{opacity:.5}
 
-/* affalds-pille + skraldespand-ikon */
+/* skraldespand-ikon i scenen */
 .trashbin{cursor:pointer}
 .trashbin:hover rect,.trashbin:focus-visible rect{filter:brightness(1.15)}
-.trash-pill{margin-top:13px;display:inline-flex;align-items:center;gap:9px;cursor:pointer;
-  padding:9px 17px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);
-  font-size:.84rem;color:var(--muted);transition:border-color .2s}
-.trash-pill:hover,.trash-pill:focus-visible{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
-.trash-pill b{color:#fff;font-weight:600}
-.trash-pill svg{width:16px;height:16px;flex:0 0 auto;color:var(--muted)}
+
+/* affaldskort */
+.trash-card{margin-top:16px;display:flex;align-items:center;gap:14px;cursor:pointer;
+  padding:14px 16px;border-radius:20px;border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+  transition:border-color .2s,background .2s}
+.trash-card:hover,.trash-card:focus-visible{border-color:color-mix(in srgb,#3f6b52 55%,transparent);
+  background:linear-gradient(180deg,rgba(95,168,128,.1),rgba(255,255,255,.015))}
+.trash-card-icon{flex:0 0 auto;width:42px;height:42px;border-radius:13px;display:flex;align-items:center;
+  justify-content:center;background:rgba(95,168,128,.18);color:#7fd9ab}
+.trash-card-icon svg{width:22px;height:22px}
+.trash-card-text{flex:1;min-width:0}
+.trash-card-label{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.trash-card-date{font-size:1.04rem;font-weight:600;color:#fff;margin-top:2px}
+.trash-card-rel{flex:0 0 auto;font-size:.74rem;font-weight:600;letter-spacing:.02em;color:#7fd9ab;
+  padding:5px 12px;border-radius:999px;background:rgba(95,168,128,.16);white-space:nowrap}
+.trash-card-rel.soon{color:#ffd24a;background:rgba(255,210,74,.16)}
+.trash-card-rel.today{color:#fff;background:#3f6b52}
+.trash-card-chevron{flex:0 0 auto;color:var(--faint);font-size:1.4rem;line-height:1}
 
 .modal-backdrop{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;
   padding:20px;background:rgba(4,5,11,.72);backdrop-filter:blur(3px)}
@@ -347,6 +360,7 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
         <!-- skraldespand -->
         <g class="trashbin" tabindex="0" role="button" aria-label="Se affaldskalender"
            onclick="openTrashModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTrashModal()}">
+          <circle cx="281" cy="186" r="22" fill="transparent" pointer-events="all"/>
           <rect x="278" y="160" width="6" height="13" rx="1" fill="#2c4d3b"/>
           <rect x="268" y="172" width="26" height="7" rx="2" fill="#2c4d3b"/>
           <rect x="270" y="178" width="22" height="24" rx="2" fill="#3f6b52"/>
@@ -369,14 +383,22 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
       <small id="doorSince"></small>
     </div>
 
-    <div class="trash-pill" id="trashPill" role="button" tabindex="0" aria-label="Se affaldskalender"
-         onclick="openTrashModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTrashModal()}">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="9" width="14" height="13" rx="1.5" fill="currentColor"/><rect x="4" y="6" width="16" height="3.5" rx="1" fill="currentColor"/><rect x="9" y="2.5" width="6" height="4" rx="1" fill="currentColor"/></svg>
-      <span>Næste tømning: <b id="trashNext">…</b></span>
-    </div>
   </div>
 
   <div class="offbanner" id="offbanner">Ingen forbindelse til sommerhusets sensorer</div>
+
+  <div class="trash-card" id="trashCard" role="button" tabindex="0" aria-label="Se affaldskalender"
+       onclick="openTrashModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTrashModal()}">
+    <div class="trash-card-icon">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="9" width="14" height="13" rx="1.5" fill="currentColor"/><rect x="4" y="6" width="16" height="3.5" rx="1" fill="currentColor"/><rect x="9" y="2.5" width="6" height="4" rx="1" fill="currentColor"/></svg>
+    </div>
+    <div class="trash-card-text">
+      <div class="trash-card-label">Skraldet hentes</div>
+      <div class="trash-card-date" id="trashNext">…</div>
+    </div>
+    <div class="trash-card-rel" id="trashRel"></div>
+    <div class="trash-card-chevron">&rsaquo;</div>
+  </div>
 
   <div class="cam-card" id="camCard">
     <div class="graph-head">
@@ -812,11 +834,27 @@ const TRASH_URL="https://raw.githubusercontent.com/henrikastrup/temperatur-displ
 const WD_FULL=["søndag","mandag","tirsdag","onsdag","torsdag","fredag","lørdag"];
 const M_FULL=["januar","februar","marts","april","maj","juni","juli","august","september","oktober","november","december"];
 function fmtTrash(d){return WD_FULL[d.getDay()]+" d. "+d.getDate()+". "+M_FULL[d.getMonth()];}
+function relTrash(d,today){
+  const days=Math.round((d-today)/86400000);
+  if(days===0)return["I dag!","today"];
+  if(days===1)return["I morgen","soon"];
+  if(days<7)return["Om "+days+" dage","soon"];
+  const weeks=Math.round(days/7);
+  return[weeks===1?"Om 1 uge":"Om "+weeks+" uger",""];
+}
 function renderTrash(dates){
   const today=new Date();today.setHours(0,0,0,0);
   const all=(dates||[]).map(s=>new Date(s+"T00:00:00")).sort((a,b)=>a-b);
   const next=all.find(d=>d>=today);
+  const relEl=document.getElementById("trashRel");
   document.getElementById("trashNext").textContent=next?fmtTrash(next):"ingen planlagt";
+  if(next){
+    const[label,cls]=relTrash(next,today);
+    relEl.textContent=label;
+    relEl.className="trash-card-rel"+(cls?" "+cls:"");
+  }else{
+    relEl.textContent="";
+  }
   const list=document.getElementById("trashList");list.innerHTML="";
   all.forEach(d=>{
     const isNext=next&&d.getTime()===next.getTime();
