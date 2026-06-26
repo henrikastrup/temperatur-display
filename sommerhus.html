@@ -201,6 +201,33 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
   background:rgba(255,157,60,.1);border:1px solid rgba(255,157,60,.3);color:#ffce8f;font-size:.82rem}
 .offline .offbanner{display:block}
 .offline .win{opacity:.5}
+
+/* affalds-pille + skraldespand-ikon */
+.trashbin{cursor:pointer}
+.trashbin:hover rect,.trashbin:focus-visible rect{filter:brightness(1.15)}
+.trash-pill{margin-top:13px;display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+  padding:9px 17px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);
+  font-size:.84rem;color:var(--muted);transition:border-color .2s}
+.trash-pill:hover,.trash-pill:focus-visible{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+.trash-pill b{color:#fff;font-weight:600}
+.trash-pill svg{width:16px;height:16px;flex:0 0 auto;color:var(--muted)}
+
+.modal-backdrop{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;
+  padding:20px;background:rgba(4,5,11,.72);backdrop-filter:blur(3px)}
+.modal-backdrop.show{display:flex}
+.modal-card{width:100%;max-width:380px;max-height:78vh;overflow-y:auto;padding:20px 18px;border-radius:22px;
+  background:#0c0f1c;border:1px solid var(--line)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.modal-head h3{font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.modal-close{background:none;border:none;color:var(--muted);font-size:1.4rem;line-height:1;cursor:pointer;padding:4px}
+.modal-sub{font-size:.78rem;color:var(--faint);margin-bottom:10px}
+.trash-row{display:flex;align-items:center;justify-content:space-between;padding:9px 4px;
+  border-bottom:1px solid var(--line);font-size:.9rem;color:var(--muted)}
+.trash-row:last-child{border-bottom:none}
+.trash-row.past{opacity:.38;text-decoration:line-through}
+.trash-row.next{color:#fff;font-weight:600}
+.trash-tag{font-size:.62rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;
+  padding:2px 9px;border-radius:999px;background:var(--accent-soft)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
@@ -316,6 +343,17 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
           <path class="grass g2" d="M264 196 Q268 184 272 175"/>
           <path class="grass g3" d="M270 197 Q271 185 267 178"/>
         </g>
+
+        <!-- skraldespand -->
+        <g class="trashbin" tabindex="0" role="button" aria-label="Se affaldskalender"
+           onclick="openTrashModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTrashModal()}">
+          <rect x="278" y="160" width="6" height="13" rx="1" fill="#2c4d3b"/>
+          <rect x="268" y="172" width="26" height="7" rx="2" fill="#2c4d3b"/>
+          <rect x="270" y="178" width="22" height="24" rx="2" fill="#3f6b52"/>
+          <line x1="276" y1="184" x2="276" y2="198" stroke="#2c4d3b" stroke-width="1.6"/>
+          <line x1="281" y1="184" x2="281" y2="198" stroke="#2c4d3b" stroke-width="1.6"/>
+          <line x1="286" y1="184" x2="286" y2="198" stroke="#2c4d3b" stroke-width="1.6"/>
+        </g>
       </svg>
 
       <div class="weatherfx" id="fx"></div>
@@ -329,6 +367,12 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
       <span class="dot"></span>
       <b id="doorState">Døren</b>
       <small id="doorSince"></small>
+    </div>
+
+    <div class="trash-pill" id="trashPill" role="button" tabindex="0" aria-label="Se affaldskalender"
+         onclick="openTrashModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTrashModal()}">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="9" width="14" height="13" rx="1.5" fill="currentColor"/><rect x="4" y="6" width="16" height="3.5" rx="1" fill="currentColor"/><rect x="9" y="2.5" width="6" height="4" rx="1" fill="currentColor"/></svg>
+      <span>Næste tømning: <b id="trashNext">…</b></span>
     </div>
   </div>
 
@@ -392,6 +436,17 @@ svg.chart text{fill:var(--faint);font-family:'Space Grotesk';font-size:13px}
   </div>
 
   <div class="foot">Opdateret <b id="updated">—</b> · Home&nbsp;Assistant</div>
+</div>
+
+<div class="modal-backdrop" id="trashModal" onclick="if(event.target===this)closeTrashModal()">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Affaldstømning</h3>
+      <button class="modal-close" onclick="closeTrashModal()" aria-label="Luk">&times;</button>
+    </div>
+    <div class="modal-sub">Torsdage, hentes ved vejen</div>
+    <div id="trashList"></div>
+  </div>
 </div>
 
 <script>
@@ -750,6 +805,43 @@ function loadCam(){
 }
 loadCam();
 setInterval(loadCam,1800000);
+
+/* affaldskalender: statisk JSON i samme GitHub-repo (Henrik redigerer datoerne
+   direkte på github.com når kommunen udsender nye tømningsdage). */
+const TRASH_URL="https://raw.githubusercontent.com/henrikastrup/temperatur-display/main/affald.json";
+const WD_FULL=["søndag","mandag","tirsdag","onsdag","torsdag","fredag","lørdag"];
+const M_FULL=["januar","februar","marts","april","maj","juni","juli","august","september","oktober","november","december"];
+function fmtTrash(d){return WD_FULL[d.getDay()]+" d. "+d.getDate()+". "+M_FULL[d.getMonth()];}
+function renderTrash(dates){
+  const today=new Date();today.setHours(0,0,0,0);
+  const all=(dates||[]).map(s=>new Date(s+"T00:00:00")).sort((a,b)=>a-b);
+  const next=all.find(d=>d>=today);
+  document.getElementById("trashNext").textContent=next?fmtTrash(next):"ingen planlagt";
+  const list=document.getElementById("trashList");list.innerHTML="";
+  all.forEach(d=>{
+    const isNext=next&&d.getTime()===next.getTime();
+    const past=d<today;
+    const el=document.createElement("div");
+    el.className="trash-row"+(isNext?" next":"")+(past?" past":"");
+    el.innerHTML="<span>"+fmtTrash(d)+"</span>"+(isNext?'<span class="trash-tag">næste</span>':"");
+    list.appendChild(el);
+  });
+}
+async function loadTrash(){
+  try{
+    const r=await fetch(TRASH_URL+"?t="+Date.now(),{cache:"no-store"});
+    if(!r.ok)throw 0;
+    const d=await r.json();
+    renderTrash(d.dates);
+  }catch(e){
+    document.getElementById("trashNext").textContent="–";
+  }
+}
+function openTrashModal(){document.getElementById("trashModal").classList.add("show");}
+function closeTrashModal(){document.getElementById("trashModal").classList.remove("show");}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeTrashModal();});
+loadTrash();
+setInterval(loadTrash,3600000);
 </script>
 </body>
 </html>
