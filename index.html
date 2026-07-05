@@ -36,7 +36,7 @@
     <div class="container">
         <div class="header">
             <h1>🏠 Smart Home Dashboard</h1>
-            <div class="last-updated">Sidst opdateret: 5. juli 2026 kl. 23.00</div>
+            <div class="last-updated">Sidst opdateret: 6. juli 2026 kl. 00.00</div>
         </div>
 
         <div class="stats-grid">
@@ -45,7 +45,7 @@
                     <div class="stat-icon temp-icon">🌡️</div>
                     <div class="stat-title">Temperatur</div>
                 </div>
-                <div class="stat-value">20.1<span class="stat-unit">°C</span></div>
+                <div class="stat-value">20.0<span class="stat-unit">°C</span></div>
                 <div class="stat-change">Badeværelse</div>
             </div>
 
@@ -54,7 +54,7 @@
                     <div class="stat-icon humidity-icon">💧</div>
                     <div class="stat-title">Luftfugtighed</div>
                 </div>
-                <div class="stat-value">18<span class="stat-unit">%</span></div>
+                <div class="stat-value">20<span class="stat-unit">%</span></div>
                 <div class="stat-change">Badeværelse</div>
             </div>
 
@@ -63,7 +63,7 @@
                     <div class="stat-icon door-icon">🚪</div>
                     <div class="stat-title">Hoveddør</div>
                 </div>
-                <div class="stat-value">24<span class="stat-unit">åbninger i dag</span></div>
+                <div class="stat-value">22<span class="stat-unit">åbninger i dag</span></div>
                  <div class="stat-change">Sidst åbnet: 12.12</div>
             </div>
         </div>
@@ -89,19 +89,19 @@
         
         new Chart(document.getElementById('tempChart').getContext('2d'), {
             type: 'line',
-            data: { labels: ["23.36","23.38","00.55","01.55","02.56","04.56","05.56","06.54","06.56","06.56","07.57","08.57","08.59","09.03","09.45","10.13","10.15","10.57","11.27","11.29","11.57","12.58","13.08","13.09","13.14","13.14","13.16","13.18","14.58","15.11","15.22","15.58","16.58","17.59","17.59","18.59","20.20","20.21","20.22","20.58","20.59","23.00"], datasets: [{ label: 'Temperatur', data: ["21.9","21.9","22.2","21.8","21.5","21.2","21.0","21.0","21.0","20.9","20.8","21.0","21.0","21.0","21.0","21.0","21.0","21.5","21.5","21.5","21.4","21.2","21.2","21.2","21.2","21.2","21.2","21.2","21.1","21.1","21.1","21.0","20.6","20.3","20.3","20.8","20.8","20.8","20.8","20.8","20.6","20.1"], borderColor: '#ff6b6b', backgroundColor: 'rgba(255, 107, 107, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
+            data: { labels: ["00.55","01.55","02.56","04.56","05.56","06.54","06.56","06.56","07.57","08.57","08.59","09.03","09.45","10.13","10.15","10.57","11.27","11.29","11.57","12.58","13.08","13.09","13.14","13.14","13.16","13.18","14.58","15.11","15.22","15.58","16.58","17.59","17.59","18.59","20.20","20.21","20.22","20.58","20.59","23.00","00.00"], datasets: [{ label: 'Temperatur', data: ["22.2","21.8","21.5","21.2","21.0","21.0","21.0","20.9","20.8","21.0","21.0","21.0","21.0","21.0","21.0","21.5","21.5","21.5","21.4","21.2","21.2","21.2","21.2","21.2","21.2","21.2","21.1","21.1","21.1","21.0","20.6","20.3","20.3","20.8","20.8","20.8","20.8","20.8","20.6","20.1","20.0"], borderColor: '#ff6b6b', backgroundColor: 'rgba(255, 107, 107, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
             options: chartDefaultOptions
         });
 
         new Chart(document.getElementById('humidityChart').getContext('2d'), {
             type: 'line',
-            data: { labels: ["23.36","23.38","00.55","01.55","02.56","04.56","05.56","06.54","06.56","06.56","07.57","08.57","08.59","09.03","09.45","10.13","10.15","10.57","11.27","11.29","11.57","12.58","13.08","13.09","13.14","13.14","13.16","13.18","14.58","15.11","15.22","15.58","16.58","17.59","17.59","18.59","20.20","20.21","20.22","20.58","20.59","23.00"], datasets: [{ label: 'Luftfugtighed', data: ["24","24","24","23","23","23","24","24","24","23","23","23","23","23","23","23","23","22","22","22","22","21","21","21","21","21","21","21","21","21","21","21","18","18","18","20","20","20","20","20","19","18"], borderColor: '#4ecdc4', backgroundColor: 'rgba(78, 205, 196, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
+            data: { labels: ["00.55","01.55","02.56","04.56","05.56","06.54","06.56","06.56","07.57","08.57","08.59","09.03","09.45","10.13","10.15","10.57","11.27","11.29","11.57","12.58","13.08","13.09","13.14","13.14","13.16","13.18","14.58","15.11","15.22","15.58","16.58","17.59","17.59","18.59","20.20","20.21","20.22","20.58","20.59","23.00","00.00"], datasets: [{ label: 'Luftfugtighed', data: ["24","23","23","23","24","24","24","23","23","23","23","23","23","23","23","22","22","22","22","21","21","21","21","21","21","21","21","21","21","21","18","18","18","20","20","20","20","20","19","18","20"], borderColor: '#4ecdc4', backgroundColor: 'rgba(78, 205, 196, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
             options: chartDefaultOptions
         });
 
         new Chart(document.getElementById('doorChart').getContext('2d'), {
             type: 'bar',
-            data: { labels: ["man.","tirs.","ons.","tors.","fre.","lør.","søn."], datasets: [{ label: 'Åbninger', data: [0,0,0,0,18,45,24], backgroundColor: 'rgba(168, 237, 234, 0.7)', borderColor: '#4ecdc4', borderWidth: 2, borderRadius: 5 }] },
+            data: { labels: ["tirs.","ons.","tors.","fre.","lør.","søn.","man."], datasets: [{ label: 'Åbninger', data: [0,0,0,0,18,45,22], backgroundColor: 'rgba(168, 237, 234, 0.7)', borderColor: '#4ecdc4', borderWidth: 2, borderRadius: 5 }] },
             options: { ...chartDefaultOptions, scales: { y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } }, x: { grid: { display: false } } } }
         });
     </script>
