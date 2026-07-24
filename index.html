@@ -63,7 +63,7 @@
                     <div class="stat-icon door-icon">🚪</div>
                     <div class="stat-title">Hoveddør</div>
                 </div>
-                <div class="stat-value">4<span class="stat-unit">åbninger i dag</span></div>
+                <div class="stat-value">5<span class="stat-unit">åbninger i dag</span></div>
                  <div class="stat-change">Sidst åbnet: 12.12</div>
             </div>
         </div>
@@ -89,19 +89,19 @@
         
         new Chart(document.getElementById('tempChart').getContext('2d'), {
             type: 'line',
-            data: { labels: ["11.45","11.51","11.55","11.55"], datasets: [{ label: 'Temperatur', data: ["22.8","22.8","22.8","22.8"], borderColor: '#ff6b6b', backgroundColor: 'rgba(255, 107, 107, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
+            data: { labels: ["11.45","11.51","11.55","11.55","11.55"], datasets: [{ label: 'Temperatur', data: ["22.8","22.8","22.8","22.8","22.8"], borderColor: '#ff6b6b', backgroundColor: 'rgba(255, 107, 107, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
             options: chartDefaultOptions
         });
 
         new Chart(document.getElementById('humidityChart').getContext('2d'), {
             type: 'line',
-            data: { labels: ["11.45","11.51","11.55","11.55"], datasets: [{ label: 'Luftfugtighed', data: ["35","35","35","35"], borderColor: '#4ecdc4', backgroundColor: 'rgba(78, 205, 196, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
+            data: { labels: ["11.45","11.51","11.55","11.55","11.55"], datasets: [{ label: 'Luftfugtighed', data: ["35","35","35","35","35"], borderColor: '#4ecdc4', backgroundColor: 'rgba(78, 205, 196, 0.1)', borderWidth: 2.5, fill: true, tension: 0.4, pointRadius: 0 }] },
             options: chartDefaultOptions
         });
 
         new Chart(document.getElementById('doorChart').getContext('2d'), {
             type: 'bar',
-            data: { labels: ["lør.","søn.","man.","tirs.","ons.","tors.","fre."], datasets: [{ label: 'Åbninger', data: [40,56,30,0,0,0,4], backgroundColor: 'rgba(168, 237, 234, 0.7)', borderColor: '#4ecdc4', borderWidth: 2, borderRadius: 5 }] },
+            data: { labels: ["lør.","søn.","man.","tirs.","ons.","tors.","fre."], datasets: [{ label: 'Åbninger', data: [40,56,30,0,0,0,5], backgroundColor: 'rgba(168, 237, 234, 0.7)', borderColor: '#4ecdc4', borderWidth: 2, borderRadius: 5 }] },
             options: { ...chartDefaultOptions, scales: { y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } }, x: { grid: { display: false } } } }
         });
     </script>
